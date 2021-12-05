@@ -6,12 +6,12 @@ import 'package:ecommerce_application/pages/user_page.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:flutter/material.dart';
 
-class BottomNavigation extends StatefulWidget {
+class MyBottomNavigation extends StatefulWidget {
   @override
-  _BottomNavigationState createState() => _BottomNavigationState();
+  _MyBottomNavigationState createState() => _MyBottomNavigationState();
 }
 
-class _BottomNavigationState extends State<BottomNavigation> {
+class _MyBottomNavigationState extends State<MyBottomNavigation> {
   // List<Map<String, Object>> _pages;
   final List _pages = [
     HomePage(),
