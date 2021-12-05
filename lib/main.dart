@@ -1,8 +1,8 @@
-import 'package:ecommerce_application/utilities/my_app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce_application/widgets/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 import 'providers/dark_theme_provider.dart';
+import 'utilities/my_app_theme.dart';
+import 'widgets/bottom_navigation.dart';
 
 void main() {
   runApp(AppEcommerce());
@@ -39,7 +39,8 @@ class _AppEcommerceState extends State<AppEcommerce> {
         child:
             Consumer<DarkThemeProvider>(builder: (context, themeData, child) {
           return MaterialApp(
-            title: 'Flutter Demo',
+            title: 'Mercado a Distancia',
+            debugShowCheckedModeBanner: false,
             theme: MyAppTheme.themeData(themeChangeProvider.darkTheme, context),
             home: MyBottomNavigation(),
           );

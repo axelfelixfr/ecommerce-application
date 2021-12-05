@@ -54,7 +54,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
               height: kBottomNavigationBarHeight * 0.98,
               decoration: const BoxDecoration(
                   border:
-                      Border(top: BorderSide(width: 0.3, color: Colors.amber))),
+                      Border(top: BorderSide(width: 0.5, color: Colors.amber))),
               child: BottomNavigationBar(
                   onTap: _selectPage,
                   backgroundColor: Theme.of(context).primaryColor,

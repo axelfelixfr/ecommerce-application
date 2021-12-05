@@ -5,12 +5,16 @@ import 'package:flutter/material.dart';
 class MyAppTheme {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
-      scaffoldBackgroundColor:
-          isDarkTheme ? Colors.black : Colors.grey.shade300,
+      scaffoldBackgroundColor: isDarkTheme
+          ? Color.fromARGB(255, 33, 33, 33)
+          : Color.fromARGB(255, 242, 242, 242),
       primarySwatch: Colors.purple,
-      primaryColor: isDarkTheme ? Colors.black : Colors.grey.shade300,
+      primaryColor: isDarkTheme
+          ? Color.fromARGB(255, 33, 33, 33)
+          : Color.fromARGB(255, 242, 242, 242),
       accentColor: Colors.deepPurple,
-      backgroundColor: isDarkTheme ? Colors.grey.shade700 : Colors.white,
+      backgroundColor:
+          isDarkTheme ? Color.fromARGB(255, 242, 242, 242) : Colors.white,
       indicatorColor: isDarkTheme ? Color(0xff0E1D36) : Color(0xffCBDCF8),
       buttonColor: isDarkTheme ? Color(0xff3B3B3B) : Color(0xffF1F5FB),
       hintColor: isDarkTheme ? Colors.grey.shade300 : Colors.grey.shade800,
@@ -18,9 +22,11 @@ class MyAppTheme {
       hoverColor: isDarkTheme ? Color(0xff3A3A3B) : Color(0xff4285F4),
       focusColor: isDarkTheme ? Color(0xff0B2512) : Color(0xffA8DAB5),
       disabledColor: Colors.grey,
-      textSelectionColor: isDarkTheme ? Colors.white : Colors.black,
+      textSelectionColor:
+          isDarkTheme ? Colors.white : Color.fromARGB(255, 33, 33, 33),
       cardColor: isDarkTheme ? Color(0xFF151515) : Colors.white,
-      canvasColor: isDarkTheme ? Colors.black87 : Colors.grey[50],
+      canvasColor:
+          isDarkTheme ? Color.fromARGB(255, 33, 33, 33) : Colors.grey[50],
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
       buttonTheme: Theme.of(context).buttonTheme.copyWith(
           colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light()),
