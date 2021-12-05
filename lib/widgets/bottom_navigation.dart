@@ -13,7 +13,13 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   // List<Map<String, Object>> _pages;
-  List _pages = [HomePage(), FeedsPage(), SearchPage(), CartPage(), UserPage()];
+  final List _pages = [
+    HomePage(),
+    FeedsPage(),
+    SearchPage(),
+    CartPage(),
+    UserPage()
+  ];
 
   int _selectedPageIndex = 4;
 
@@ -40,32 +46,33 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
         body: _pages[_selectedPageIndex], //_pages[_selectedPageIndex]['page'],
         bottomNavigationBar: BottomAppBar(
-            shape: CircularNotchedRectangle(),
+            shape: const CircularNotchedRectangle(),
             notchMargin: 2,
             elevation: 5,
             clipBehavior: Clip.antiAlias,
             child: Container(
               height: kBottomNavigationBarHeight * 0.98,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   border:
                       Border(top: BorderSide(width: 0.3, color: Colors.amber))),
               child: BottomNavigationBar(
                   onTap: _selectPage,
                   backgroundColor: Theme.of(context).primaryColor,
-                  unselectedItemColor: Theme.of(context).textSelectionColor,
+                  unselectedItemColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
                   selectedItemColor: Colors.amber,
                   currentIndex: _selectedPageIndex,
                   items: [
                     BottomNavigationBarItem(
-                        icon: Icon(AppIcons.home), label: 'Home'),
+                        icon: Icon(MyAppIcons.home), label: 'Home'),
                     BottomNavigationBarItem(
-                        icon: Icon(AppIcons.rss), label: 'Feeds'),
-                    BottomNavigationBarItem(
+                        icon: Icon(MyAppIcons.rss), label: 'Feeds'),
+                    const BottomNavigationBarItem(
                         icon: Icon(null), activeIcon: null, label: 'Search'),
                     BottomNavigationBarItem(
-                        icon: Icon(AppIcons.shopping), label: 'Cart'),
+                        icon: Icon(MyAppIcons.shopping), label: 'Cart'),
                     BottomNavigationBarItem(
-                        icon: Icon(AppIcons.user), label: 'User'),
+                        icon: Icon(MyAppIcons.user), label: 'User'),
                   ]),
             )),
         floatingActionButtonLocation:
@@ -77,7 +84,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 tooltip: 'Search',
                 elevation: 5,
                 hoverElevation: 10,
-                child: Icon(AppIcons.search),
+                child: Icon(MyAppIcons.search),
                 splashColor: Colors.grey,
                 onPressed: () => setState(() {
                       _selectedPageIndex = 2;

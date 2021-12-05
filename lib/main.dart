@@ -1,3 +1,4 @@
+import 'package:ecommerce_application/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class AppEcommerce extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Text('Hola mundo!'),
+      home: BottomNavigation(),
     );
   }
 }
