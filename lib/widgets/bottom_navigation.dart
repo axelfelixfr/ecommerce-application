@@ -3,8 +3,8 @@ import 'package:ecommerce_application/pages/feeds_page.dart';
 import 'package:ecommerce_application/pages/home_page.dart';
 import 'package:ecommerce_application/pages/search_page.dart';
 import 'package:ecommerce_application/pages/user_page.dart';
+import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -57,15 +57,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   currentIndex: _selectedPageIndex,
                   items: [
                     BottomNavigationBarItem(
-                        icon: Icon(LineIcons.home), label: 'Home'),
+                        icon: Icon(AppIcons.home), label: 'Home'),
                     BottomNavigationBarItem(
-                        icon: Icon(LineIcons.rss), label: 'Feeds'),
+                        icon: Icon(AppIcons.rss), label: 'Feeds'),
                     BottomNavigationBarItem(
                         icon: Icon(null), activeIcon: null, label: 'Search'),
                     BottomNavigationBarItem(
-                        icon: Icon(LineIcons.shoppingBasket), label: 'Cart'),
+                        icon: Icon(AppIcons.shopping), label: 'Cart'),
                     BottomNavigationBarItem(
-                        icon: Icon(LineIcons.user), label: 'User'),
+                        icon: Icon(AppIcons.user), label: 'User'),
                   ]),
             )),
         floatingActionButtonLocation:
@@ -77,7 +77,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 tooltip: 'Search',
                 elevation: 5,
                 hoverElevation: 10,
-                child: Icon(LineIcons.search),
+                child: Icon(AppIcons.search),
                 splashColor: Colors.grey,
                 onPressed: () => setState(() {
                       _selectedPageIndex = 2;
