@@ -40,7 +40,7 @@ class _UserPageState extends State<UserPage> {
             top = constraints.biggest.height;
 
             return Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [Colors.amber, Colors.amberAccent],
                     begin: FractionalOffset(0.0, 0.0),
@@ -52,17 +52,17 @@ class _UserPageState extends State<UserPage> {
                 // collapseMode: CollapseMode.parallax,
                 centerTitle: true,
                 title: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 300),
+                  duration: Duration(milliseconds: 300),
                   opacity: top <= 110.0 ? 1.0 : 0,
                   child: Row(
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         width: 12,
                       ),
                       Container(
                         height: kToolbarHeight / 1.8,
                         width: kToolbarHeight / 1.8,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
                               color: Colors.white,
@@ -77,17 +77,17 @@ class _UserPageState extends State<UserPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         width: 12,
                       ),
-                      const Text(
+                      Text(
                         'Guest',
                         style: TextStyle(fontSize: 20.0, color: Colors.white),
                       ),
                     ],
                   ),
                 ),
-                background: const Image(
+                background: Image(
                   image: NetworkImage(
                       'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
                   fit: BoxFit.fill,
@@ -102,21 +102,22 @@ class _UserPageState extends State<UserPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: EdgeInsets.only(left: 8.0),
                 child: userTitle('Información del usuario')),
-            const Divider(thickness: 1, color: Colors.grey),
+            Divider(thickness: 1, color: Colors.grey),
             userListTile('Correo electrónico', 'Correo sub', 0, context),
             userListTile('Número de teléfono', 'Teléfono sub', 1, context),
             userListTile('Dirección de envío', 'subtitlo bonito', 2, context),
             userListTile('Fecha de unión', 'subtitlo bonito', 3, context),
             // userListTile('', 'subtitlo bonito', 0, context),
             Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: EdgeInsets.only(left: 8.0),
                 child: userTitle('Configuración de usuario')),
-            const Divider(thickness: 1, color: Colors.grey),
+            Divider(thickness: 1, color: Colors.grey),
             ListTileSwitch(
               value: themeChange.darkTheme,
-              leading: const Icon(LineIcons.moon),
+              switchActiveColor: Colors.amber,
+              leading: Icon(LineIcons.moon),
               onChanged: (value) {
                 setState(() {
                   themeChange.darkTheme = value;
@@ -124,8 +125,7 @@ class _UserPageState extends State<UserPage> {
               },
               visualDensity: VisualDensity.comfortable,
               switchType: SwitchType.cupertino,
-              switchActiveColor: Colors.indigo,
-              title: const Text('Modo Oscuro'),
+              title: Text('Modo Oscuro'),
             ),
             Material(
               color: Colors.transparent,
@@ -141,37 +141,37 @@ class _UserPageState extends State<UserPage> {
                             title: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 6.0),
+                                  padding: EdgeInsets.only(right: 6.0),
                                   child: Image.network(
                                     'https://image.flaticon.com/icons/png/128/1828/1828304.png',
                                     height: 20,
                                     width: 20,
                                   ),
                                 ),
-                                const Padding(
+                                Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: Text('Sign out'),
                                 ),
                               ],
                             ),
-                            content: const Text('¿Seguro(a) de cerrar sesión?'),
+                            content: Text('¿Seguro(a) de cerrar sesión?'),
                             actions: [
                               TextButton(
                                   style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.all(0),
+                                    padding: EdgeInsets.all(0),
                                     primary: Colors.red[400],
                                   ),
                                   onPressed: () async {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Cancelar')),
+                                  child: Text('Cancelar')),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Stack(
                                   children: <Widget>[
                                     Positioned.fill(
                                       child: Container(
-                                        decoration: const BoxDecoration(
+                                        decoration: BoxDecoration(
                                           color:
                                               Color.fromARGB(255, 255, 193, 7),
                                         ),
@@ -179,13 +179,13 @@ class _UserPageState extends State<UserPage> {
                                     ),
                                     TextButton(
                                       style: TextButton.styleFrom(
-                                        padding: const EdgeInsets.all(0),
+                                        padding: EdgeInsets.all(0),
                                         primary: Colors.white,
                                         // textStyle:
-                                        // const TextStyle(fontSize: 20),
+                                        // TextStyle(fontSize: 20),
                                       ),
                                       onPressed: () {},
-                                      child: const Text('Aceptar'),
+                                      child: Text('Aceptar'),
                                     ),
                                   ],
                                 ),
@@ -194,8 +194,8 @@ class _UserPageState extends State<UserPage> {
                           );
                         });
                   },
-                  title: const Text('Cerrar sesión'),
-                  leading: const Icon(Icons.exit_to_app_rounded),
+                  title: Text('Cerrar sesión'),
+                  leading: Icon(Icons.exit_to_app_rounded),
                 ),
               ),
             ),
@@ -242,7 +242,7 @@ class _UserPageState extends State<UserPage> {
           backgroundColor: Colors.amber,
           heroTag: "btnFlotant",
           onPressed: () {},
-          child: const Icon(LineIcons.retroCamera),
+          child: Icon(LineIcons.retroCamera),
         ),
       ),
     );
@@ -270,10 +270,10 @@ class _UserPageState extends State<UserPage> {
   // Titulo para lista de opciones
   Widget userTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.all(14.0),
+      padding: EdgeInsets.all(14.0),
       child: Text(
         title,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
       ),
     );
   }
