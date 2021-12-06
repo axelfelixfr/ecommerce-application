@@ -7,4 +7,5 @@ class MyAppIcons {
   static IconData search = LineIcons.search;
   static IconData user = LineIcons.user;
   static IconData shopping = LineIcons.shoppingBasket;
+  static IconData trash = LineIcons.alternateTrash;
 }
