@@ -14,7 +14,7 @@ class MyAppTheme {
           : Color.fromARGB(255, 242, 242, 242),
       accentColor: Colors.deepPurple,
       backgroundColor:
-          isDarkTheme ? Color.fromARGB(255, 242, 242, 242) : Colors.white,
+          isDarkTheme ? Color.fromARGB(255, 55, 55, 55) : Colors.white,
       indicatorColor: isDarkTheme ? Color(0xff0E1D36) : Color(0xffCBDCF8),
       buttonColor: isDarkTheme ? Color(0xff3B3B3B) : Color(0xffF1F5FB),
       hintColor: isDarkTheme ? Colors.grey.shade300 : Colors.grey.shade800,

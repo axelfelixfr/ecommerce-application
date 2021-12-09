@@ -63,15 +63,15 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
                   currentIndex: _selectedPageIndex,
                   items: [
                     BottomNavigationBarItem(
-                        icon: Icon(MyAppIcons.home), label: 'Home'),
+                        icon: Icon(MyAppIcons.home), label: 'Inicio'),
                     BottomNavigationBarItem(
                         icon: Icon(MyAppIcons.rss), label: 'Feeds'),
                     const BottomNavigationBarItem(
-                        icon: Icon(null), activeIcon: null, label: 'Search'),
+                        icon: Icon(null), activeIcon: null, label: 'Buscar'),
                     BottomNavigationBarItem(
-                        icon: Icon(MyAppIcons.shopping), label: 'Cart'),
+                        icon: Icon(MyAppIcons.shopping), label: 'Carrito'),
                     BottomNavigationBarItem(
-                        icon: Icon(MyAppIcons.user), label: 'User'),
+                        icon: Icon(MyAppIcons.user), label: 'Usuario'),
                   ]),
             )),
         floatingActionButtonLocation:

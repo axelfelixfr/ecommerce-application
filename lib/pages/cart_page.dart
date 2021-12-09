@@ -8,14 +8,12 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List products = [];
-    return products.isEmpty
+    return !products.isEmpty
         ? Scaffold(body: CartEmpty())
         : Scaffold(
-            appBar: AppBar(
-                title: Text('Recuento de productos en tu carrito'),
-                actions: [
-                  IconButton(onPressed: () {}, icon: Icon(MyAppIcons.trash))
-                ]),
+            appBar: AppBar(title: Text('Productos en tu carrito'), actions: [
+              IconButton(onPressed: () {}, icon: Icon(MyAppIcons.trash))
+            ]),
             body: Container(
               margin: EdgeInsets.only(bottom: 60),
               child: ListView.builder(
@@ -24,7 +22,8 @@ class CartPage extends StatelessWidget {
                     return CartProducts();
                   }),
             ),
-            bottomSheet: CartCheckout(),
+            bottomSheet: Container(
+                child: CartCheckout(), margin: EdgeInsets.only(bottom: 20)),
           );
   }
 }

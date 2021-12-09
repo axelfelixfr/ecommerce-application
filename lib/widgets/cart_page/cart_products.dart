@@ -15,21 +15,26 @@ class _CartProductsState extends State<CartProducts> {
     final themeChange = Provider.of<DarkThemeProvider>(context);
 
     return Container(
-        height: 130,
+        height: 140,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                bottomRight: const Radius.circular(16.0),
-                topRight: const Radius.circular(16.0)),
+            borderRadius: BorderRadius.all(const Radius.circular(16.0))
+            // BorderRadius.only(
+            // bottomRight: const Radius.circular(16.0),
+            // topRight: const Radius.circular(16.0)
+            ,
             color: Theme.of(context).backgroundColor),
         child: Row(children: [
-          Container(
-            width: 135,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        'https://s1.qwant.com/thumbr/474x474/3/d/8ba8797bd23743207bcc11d77f13a4565520210c95bc1904d75ecfd33c7b94/th.jpg?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.aLe3QbdQKcyWxjvfUvxQQgHaHa%26pid%3DApi&q=0&b=1&p=0&a=0'),
-                    fit: BoxFit.contain)),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              width: 135,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          'https://s1.qwant.com/thumbr/474x474/3/d/8ba8797bd23743207bcc11d77f13a4565520210c95bc1904d75ecfd33c7b94/th.jpg?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.aLe3QbdQKcyWxjvfUvxQQgHaHa%26pid%3DApi&q=0&b=1&p=0&a=0'),
+                      fit: BoxFit.contain)),
+            ),
           ),
           Flexible(
             child: Padding(
@@ -60,32 +65,32 @@ class _CartProductsState extends State<CartProducts> {
                   ],
                 ),
                 Row(children: [
-                  Text('Price'),
-                  SizedBox(width: 5),
-                  Text('\$450',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600))
-                ]),
-                Row(children: [
-                  Text('Subtotal'),
+                  Text('Price:'),
                   SizedBox(width: 5),
                   Text('\$450',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                           color: themeChange.darkTheme
-                              ? Colors.brown.shade900
-                              : Theme.of(context).primaryColor))
+                              ? Colors.white70
+                              : Colors.black45))
+                ]),
+                Row(children: [
+                  Text('Subtotal:'),
+                  SizedBox(width: 5),
+                  Text('\$450',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: themeChange.darkTheme
+                              ? Colors.white70
+                              : Colors.black45))
                 ]),
                 Row(
                   children: [
-                    Text(
-                      'Ships Free',
-                      style: TextStyle(
-                          color: themeChange.darkTheme
-                              ? Colors.brown.shade900
-                              : Theme.of(context).primaryColor),
-                    ),
+                    Text('Ships Free',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w600)),
                     Spacer(),
                     Material(
                       color: Colors.transparent,
@@ -104,8 +109,8 @@ class _CartProductsState extends State<CartProducts> {
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                                 gradient: LinearGradient(colors: [
-                              MyAppColors.gradiendLStart,
-                              MyAppColors.gradiendLEnd
+                              MyAppColors.gradiendYEnd,
+                              MyAppColors.gradiendYStart
                             ], stops: [
                               0.0,
                               0.7

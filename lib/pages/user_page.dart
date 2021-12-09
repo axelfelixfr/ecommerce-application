@@ -1,4 +1,5 @@
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
+import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
@@ -42,7 +43,10 @@ class _UserPageState extends State<UserPage> {
             return Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [Colors.amber, Colors.amberAccent],
+                    colors: [
+                      MyAppColors.gradiendYEnd,
+                      MyAppColors.gradiendYStart
+                    ],
                     begin: FractionalOffset(0.0, 0.0),
                     end: FractionalOffset(1.0, 0.0),
                     stops: [0.0, 1.0],

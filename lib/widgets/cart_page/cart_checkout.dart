@@ -1,13 +1,17 @@
+import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartCheckout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
+
     return Container(
         decoration: BoxDecoration(
-            border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
+            border: Border(top: BorderSide(color: Colors.amber, width: 0.5))),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(6.0),
           child: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -20,27 +24,32 @@ class CartCheckout extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           onTap: () {},
                           child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: Text('Checkout',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color:
                                           Theme.of(context).textSelectionColor,
-                                      fontSize: 18,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.w600))),
                         ))),
-                Text('Total',
+                Spacer(),
+                Text('Total:',
                     style: TextStyle(
                         color: Theme.of(context).textSelectionColor,
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.w600)),
-                Spacer(),
-                Text('\$170.00',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500))
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text('\$170.00',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: themeChange.darkTheme
+                              ? Colors.white70
+                              : Colors.black45,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500)),
+                )
               ]),
         ));
   }
