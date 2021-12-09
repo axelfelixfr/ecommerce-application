@@ -1,4 +1,5 @@
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
+import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,22 +18,32 @@ class CartCheckout extends StatelessWidget {
               children: [
                 Expanded(
                     flex: 2,
-                    child: Material(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.redAccent,
-                        child: InkWell(
+                    child: Container(
+                      decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          onTap: () {},
-                          child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Text('Checkout',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color:
-                                          Theme.of(context).textSelectionColor,
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w600))),
-                        ))),
+                          gradient: LinearGradient(colors: [
+                            MyAppColors.gradiendYEnd,
+                            MyAppColors.gradiendYStart
+                          ], stops: [
+                            0.0,
+                            0.7
+                          ])),
+                      child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(30),
+                            onTap: () {},
+                            child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Text('Checkout',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .textSelectionColor,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w600))),
+                          )),
+                    )),
                 Spacer(),
                 Text('Total:',
                     style: TextStyle(

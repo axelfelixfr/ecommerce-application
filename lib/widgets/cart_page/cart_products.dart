@@ -16,7 +16,7 @@ class _CartProductsState extends State<CartProducts> {
 
     return Container(
         height: 140,
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(top: 5, bottom: 12, left: 8, right: 8),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(const Radius.circular(16.0))
             // BorderRadius.only(
@@ -65,7 +65,7 @@ class _CartProductsState extends State<CartProducts> {
                   ],
                 ),
                 Row(children: [
-                  Text('Price:'),
+                  Text('Precio:'),
                   SizedBox(width: 5),
                   Text('\$450',
                       style: TextStyle(
@@ -88,7 +88,7 @@ class _CartProductsState extends State<CartProducts> {
                 ]),
                 Row(
                   children: [
-                    Text('Ships Free',
+                    Text('Envio gratis',
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w600)),
                     Spacer(),
