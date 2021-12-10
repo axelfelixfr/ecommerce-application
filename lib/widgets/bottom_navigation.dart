@@ -21,7 +21,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
     UserPage()
   ];
 
-  int _selectedPageIndex = 4;
+  int _selectedPageIndex = 0;
 
   // @override
   // void initState() {
