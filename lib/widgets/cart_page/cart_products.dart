@@ -71,9 +71,7 @@ class _CartProductsState extends State<CartProducts> {
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
-                          color: themeChange.darkTheme
-                              ? Colors.white70
-                              : Colors.black45))
+                          color: Theme.of(context).accentColor))
                 ]),
                 Row(children: [
                   Text('Subtotal:'),
@@ -82,9 +80,7 @@ class _CartProductsState extends State<CartProducts> {
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
-                          color: themeChange.darkTheme
-                              ? Colors.white70
-                              : Colors.black45))
+                          color: Theme.of(context).accentColor))
                 ]),
                 Row(
                   children: [
