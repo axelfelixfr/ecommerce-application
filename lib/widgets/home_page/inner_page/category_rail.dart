@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BrandsNavigationRail extends StatelessWidget {
+class CategoryRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'brands_rail.dart';
+import 'category_rail.dart';
 
-class BrandNavigationRailScreen extends StatefulWidget {
-  BrandNavigationRailScreen({Key key}) : super(key: key);
+class CategoriesNavigationRail extends StatefulWidget {
+  CategoriesNavigationRail({Key key}) : super(key: key);
 
   static const routeName = '/brands_navigation_rail';
   @override
-  _BrandNavigationRailScreenState createState() =>
-      _BrandNavigationRailScreenState();
+  _CategoriesNavigationRailState createState() =>
+      _CategoriesNavigationRailState();
 }
 
-class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
+class _CategoriesNavigationRailState extends State<CategoriesNavigationRail> {
   int _selectedIndex = 0;
   final padding = 8.0;
   String routeArgs;
@@ -188,8 +188,7 @@ class ContentSpace extends StatelessWidget {
           context: context,
           child: ListView.builder(
             itemCount: 5,
-            itemBuilder: (BuildContext context, int index) =>
-                BrandsNavigationRail(),
+            itemBuilder: (BuildContext context, int index) => CategoryRail(),
           ),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class RecipesWidget extends StatelessWidget {
-  RecipesWidget({Key key, this.index}) : super(key: key);
+class ListRecipes extends StatelessWidget {
+  ListRecipes({Key key, this.index}) : super(key: key);
 
   final int index;
 

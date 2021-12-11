@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
-class PopularProducts extends StatelessWidget {
+class CardPopularProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(

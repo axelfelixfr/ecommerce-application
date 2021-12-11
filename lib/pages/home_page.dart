@@ -1,12 +1,12 @@
 import 'package:backdrop/app_bar.dart';
 import 'package:backdrop/backdrop.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
-import 'package:ecommerce_application/widgets/home_page/inner_page/brand_navigation_rail.dart';
-import 'package:ecommerce_application/widgets/home_page/popular_products.dart';
-import 'package:ecommerce_application/widgets/home_page/recipes.dart';
+import 'package:ecommerce_application/widgets/home_page/carousel_promos.dart';
+import 'package:ecommerce_application/widgets/home_page/inner_page/categories_navigation_rail.dart';
+import 'package:ecommerce_application/widgets/home_page/card_popular_product.dart';
+import 'package:ecommerce_application/widgets/home_page/list_recipes.dart';
+import 'package:ecommerce_application/widgets/home_page/swiper_categories.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,22 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List _carouselImages = [
-    'assets/img/carousel_1.png',
-    'assets/img/carousel_2.png',
-    'assets/img/carousel_3.png',
-    'assets/img/carousel_4.png',
-    'assets/img/carousel_5.png'
-  ];
-
-  List _swiperImages = [
-    'assets/img/swiper_1.png',
-    'assets/img/swiper_2.png',
-    'assets/img/swiper_3.png',
-    'assets/img/swiper_4.png',
-    'assets/img/swiper_5.png'
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,30 +54,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: 190.0,
-                          width: double.infinity,
-                          child: Carousel(
-                            boxFit: BoxFit.fill,
-                            autoplay: true,
-                            animationCurve: Curves.fastOutSlowIn,
-                            animationDuration: Duration(milliseconds: 1000),
-                            dotSize: 5.0,
-                            dotIncreasedColor: Colors.pink,
-                            dotBgColor: Colors.transparent,
-                            dotPosition: DotPosition.bottomCenter,
-                            // dotVerticalPadding: 10.0,
-                            showIndicator: true,
-                            indicatorBgPadding: 5.0,
-                            images: [
-                              ExactAssetImage(_carouselImages[0]),
-                              ExactAssetImage(_carouselImages[1]),
-                              ExactAssetImage(_carouselImages[2]),
-                              ExactAssetImage(_carouselImages[3]),
-                              ExactAssetImage(_carouselImages[4]),
-                            ],
-                          ),
-                        ),
+                        CarouselPromos(),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(children: [
@@ -104,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                             FlatButton(
                                 onPressed: () {
                                   Navigator.of(context).pushNamed(
-                                    BrandNavigationRailScreen.routeName,
+                                    CategoriesNavigationRail.routeName,
                                     arguments: {
                                       5,
                                     },
@@ -117,35 +78,7 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.pink)))
                           ]),
                         ),
-                        Container(
-                            height: 190,
-                            width: MediaQuery.of(context).size.width,
-                            child: Swiper(
-                              itemCount: _swiperImages.length,
-                              autoplay: true,
-                              viewportFraction: 0.7,
-                              scale: 0.85,
-                              onTap: (index) {
-                                Navigator.of(context).pushNamed(
-                                  BrandNavigationRailScreen.routeName,
-                                  arguments: {
-                                    index,
-                                  },
-                                );
-                              },
-                              itemBuilder: (BuildContext context, int index) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Container(
-                                    color: Color.fromARGB(255, 235, 235, 235),
-                                    child: Image.asset(
-                                      _swiperImages[index],
-                                      // fit: BoxFit.fill
-                                    ),
-                                  ),
-                                );
-                              },
-                            )),
+                        SwiperCategories(),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -160,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return RecipesWidget(index: index);
+                                  return ListRecipes(index: index);
                                 },
                                 itemCount: 7)),
                         Padding(
@@ -187,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                                 scrollDirection: Axis.horizontal,
                                 itemCount: 8,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return PopularProducts();
+                                  return CardPopularProduct();
                                 }))
                       ]),
                 ))));

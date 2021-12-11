@@ -1,9 +1,9 @@
-import 'package:ecommerce_application/widgets/home_page/inner_page/brand_navigation_rail.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/dark_theme_provider.dart';
 import 'utilities/my_app_theme.dart';
 import 'widgets/bottom_navigation.dart';
+import 'widgets/home_page/inner_page/categories_navigation_rail.dart';
 
 void main() {
   runApp(AppEcommerce());
@@ -45,8 +45,8 @@ class _AppEcommerceState extends State<AppEcommerce> {
             theme: MyAppTheme.themeData(themeChangeProvider.darkTheme, context),
             home: MyBottomNavigation(),
             routes: {
-              BrandNavigationRailScreen.routeName: (ctx) =>
-                  BrandNavigationRailScreen(),
+              CategoriesNavigationRail.routeName: (ctx) =>
+                  CategoriesNavigationRail(),
             },
           );
         }));
