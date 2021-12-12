@@ -1,5 +1,5 @@
 import 'package:ecommerce_application/pages/cart_page.dart';
-import 'package:ecommerce_application/pages/feeds_page.dart';
+import 'package:ecommerce_application/pages/market_page.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:flutter/material.dart';
@@ -100,16 +100,16 @@ class _BackLayerMenuState extends State<BackLayerMenu> {
                                             'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
                                         fit: BoxFit.fill))))),
                     contentBackLayer(() {
-                      navigateTo(context, FeedsPage.routeName);
+                      navigateTo(context, MarketPage.routeName);
                     }, "Mercado", 0),
                     contentBackLayer(() {
                       navigateTo(context, CartPage.routeName);
                     }, "Carrito", 1),
                     contentBackLayer(() {
-                      navigateTo(context, FeedsPage.routeName);
+                      navigateTo(context, MarketPage.routeName);
                     }, "Favoritos", 2),
                     contentBackLayer(() {
-                      navigateTo(context, FeedsPage.routeName);
+                      navigateTo(context, MarketPage.routeName);
                     }, "Subir nuevo producto", 3)
                   ])))
     ]);

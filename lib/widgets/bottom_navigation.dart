@@ -1,5 +1,5 @@
 import 'package:ecommerce_application/pages/cart_page.dart';
-import 'package:ecommerce_application/pages/feeds_page.dart';
+import 'package:ecommerce_application/pages/market_page.dart';
 import 'package:ecommerce_application/pages/home_page.dart';
 import 'package:ecommerce_application/pages/search_page.dart';
 import 'package:ecommerce_application/pages/user_page.dart';
@@ -15,7 +15,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
   // List<Map<String, Object>> _pages;
   final List _pages = [
     HomePage(),
-    FeedsPage(),
+    MarketPage(),
     SearchPage(),
     CartPage(),
     UserPage()

@@ -11,7 +11,7 @@ class MyAppColors {
   static Color favColor = Color(0xFFF44336); // red 500
   static Color favBadgeColor = Color(0xFFE57373); // red 300
 
-  static Color cartColor = Color(0xFF5E35B1); //deep purple 600
+  static Color cartColor = Color(0xFFFFC400); //deep purple 600
   static Color cartBadgeColor = Color(0xFFBA68C8); //purple 300
 
   static Color gradiendFStart = Color(0xFFE040FB); //purpleaccent 100

@@ -1,6 +1,7 @@
 import 'package:ecommerce_application/pages/cart_page.dart';
-import 'package:ecommerce_application/pages/feeds_page.dart';
+import 'package:ecommerce_application/pages/market_page.dart';
 import 'package:ecommerce_application/pages/wishlist_page.dart';
+import 'package:ecommerce_application/widgets/market_page/inner_page/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/dark_theme_provider.dart';
@@ -51,8 +52,9 @@ class _AppEcommerceState extends State<AppEcommerce> {
               CategoriesNavigationRail.routeName: (context) =>
                   CategoriesNavigationRail(),
               CartPage.routeName: (context) => CartPage(),
-              FeedsPage.routeName: (context) => FeedsPage(),
-              WishlistPage.routeName: (context) => WishlistPage()
+              MarketPage.routeName: (context) => MarketPage(),
+              WishlistPage.routeName: (context) => WishlistPage(),
+              ProductDetails.routeName: (context) => ProductDetails()
             },
           );
         }));
