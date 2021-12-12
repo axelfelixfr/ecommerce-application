@@ -5,6 +5,8 @@ import 'package:ecommerce_application/widgets/cart_page/cart_products.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatelessWidget {
+  static const routeName = '/CartPage';
+
   @override
   Widget build(BuildContext context) {
     List products = [];

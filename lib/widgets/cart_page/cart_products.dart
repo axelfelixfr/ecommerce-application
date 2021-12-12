@@ -104,13 +104,15 @@ class _CartProductsState extends State<CartProducts> {
                             width: MediaQuery.of(context).size.width * 0.12,
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
-                                gradient: LinearGradient(colors: [
-                              MyAppColors.gradiendYEnd,
-                              MyAppColors.gradiendYStart
-                            ], stops: [
-                              0.0,
-                              0.7
-                            ])),
+                                gradient: LinearGradient(
+                                    colors: [
+                                      MyAppColors.gradiendYStart,
+                                      MyAppColors.gradiendYEnd
+                                    ],
+                                    begin: const FractionalOffset(0.0, 0.0),
+                                    end: const FractionalOffset(5.0, 9.0),
+                                    stops: [0.0, 0.1],
+                                    tileMode: TileMode.mirror)),
                             child: Text('1', textAlign: TextAlign.center))),
                     Material(
                       color: Colors.transparent,

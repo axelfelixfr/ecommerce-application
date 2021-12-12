@@ -1,5 +1,5 @@
+import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 
 class CardPopularProduct extends StatelessWidget {
   @override
@@ -78,10 +78,8 @@ class CardPopularProduct extends StatelessWidget {
                                             BorderRadius.circular(30.0),
                                         child: Padding(
                                           padding: const EdgeInsets.all(2.0),
-                                          child: Icon(
-                                              LineIcons.addToShoppingCart,
-                                              size: 30,
-                                              color: Colors.amber),
+                                          child: Icon(MyAppIcons.addProduct,
+                                              size: 30, color: Colors.amber),
                                         )))
                               ])
                         ]))

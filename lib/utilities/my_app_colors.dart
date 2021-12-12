@@ -16,10 +16,10 @@ class MyAppColors {
 
   static Color gradiendFStart = Color(0xFFE040FB); //purpleaccent 100
   static Color gradiendFEnd = Color(0xFFE1BEE7); //purple 100
-  static Color endColor = Color(0xFFCE93D8); //purple 200
+  static Color endColor = Color.fromARGB(255, 255, 186, 8); //purple 200
   static Color purple300 = Color(0xFFBA68C8); //purple 300
   static Color gradiendYEnd = Color(0xFFFFA000); //purple 400
   static Color gradiendYStart = Color(0xFFFFC400); //purpleaccent 700
-  static Color starterColor = Color(0xFF8E24AA); //purple 600
+  static Color starterColor = Color.fromARGB(255, 244, 140, 6); //purple 600
   static Color purple800 = Color(0xFF6A1B9A);
 }

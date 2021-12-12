@@ -21,13 +21,15 @@ class CartCheckout extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          gradient: LinearGradient(colors: [
-                            MyAppColors.gradiendYEnd,
-                            MyAppColors.gradiendYStart
-                          ], stops: [
-                            0.0,
-                            0.7
-                          ])),
+                          gradient: LinearGradient(
+                              colors: [
+                                MyAppColors.gradiendYStart,
+                                MyAppColors.gradiendYEnd
+                              ],
+                              begin: const FractionalOffset(0.0, 0.0),
+                              end: const FractionalOffset(5.0, 9.0),
+                              stops: [0.0, 0.1],
+                              tileMode: TileMode.mirror)),
                       child: Material(
                           color: Colors.transparent,
                           child: InkWell(

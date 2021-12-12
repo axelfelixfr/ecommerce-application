@@ -1,5 +1,7 @@
+import 'package:ecommerce_application/pages/wishlist_page.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
+import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
@@ -39,18 +41,17 @@ class _UserPageState extends State<UserPage> {
           flexibleSpace: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
             top = constraints.biggest.height;
-
             return Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [
-                      MyAppColors.gradiendYEnd,
-                      MyAppColors.gradiendYStart
+                      MyAppColors.gradiendYStart,
+                      MyAppColors.gradiendYEnd
                     ],
-                    begin: FractionalOffset(0.0, 0.0),
-                    end: FractionalOffset(1.0, 0.0),
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp),
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(7.0, 0.0),
+                    stops: [0.0, 0.1],
+                    tileMode: TileMode.mirror),
               ),
               child: FlexibleSpaceBar(
                 // collapseMode: CollapseMode.parallax,
@@ -109,6 +110,31 @@ class _UserPageState extends State<UserPage> {
                 padding: EdgeInsets.only(left: 8.0),
                 child: userTitle('Información del usuario')),
             Divider(thickness: 1, color: Colors.grey),
+            Material(
+                color: Colors.transparent,
+                child: InkWell(
+                    splashColor: Theme.of(context).splashColor,
+                    child: ListTile(
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(WishlistPage.routeName),
+                      title: Text('Mi lista'),
+                      trailing: Icon(LineIcons.angleRight),
+                      leading: Icon(MyAppIcons.wishlist),
+                    ))),
+            Material(
+                color: Colors.transparent,
+                child: InkWell(
+                    splashColor: Theme.of(context).splashColor,
+                    child: ListTile(
+                      onTap: () {},
+                      title: Text('Mi carrito'),
+                      trailing: Icon(LineIcons.angleRight),
+                      leading: Icon(MyAppIcons.shopping),
+                    ))),
+            Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: userTitle('Información del usuario')),
+            Divider(thickness: 1, color: Colors.grey),
             userListTile('Correo electrónico', 'Correo sub', 0, context),
             userListTile('Número de teléfono', 'Teléfono sub', 1, context),
             userListTile('Dirección de envío', 'subtitlo bonito', 2, context),
@@ -121,7 +147,9 @@ class _UserPageState extends State<UserPage> {
             ListTileSwitch(
               value: themeChange.darkTheme,
               switchActiveColor: Colors.amber,
-              leading: Icon(LineIcons.moon),
+              leading: themeChange.darkTheme
+                  ? Icon(LineIcons.sun)
+                  : Icon(LineIcons.moon),
               onChanged: (value) {
                 setState(() {
                   themeChange.darkTheme = value;
@@ -264,11 +292,16 @@ class _UserPageState extends State<UserPage> {
   // Widget de un item de la lista de opciones
   Widget userListTile(
       String title, String subTitle, int indexItem, BuildContext context) {
-    return ListTile(
-      title: Text(title),
-      subtitle: Text(subTitle),
-      leading: Icon(_userTileIcons[indexItem]),
-    );
+    return Material(
+        color: Colors.transparent,
+        child: InkWell(
+            splashColor: Theme.of(context).splashColor,
+            child: ListTile(
+              onTap: () {},
+              title: Text(title),
+              subtitle: Text(subTitle),
+              leading: Icon(_userTileIcons[indexItem]),
+            )));
   }
 
   // Titulo para lista de opciones

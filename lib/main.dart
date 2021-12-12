@@ -1,3 +1,6 @@
+import 'package:ecommerce_application/pages/cart_page.dart';
+import 'package:ecommerce_application/pages/feeds_page.dart';
+import 'package:ecommerce_application/pages/wishlist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/dark_theme_provider.dart';
@@ -45,8 +48,11 @@ class _AppEcommerceState extends State<AppEcommerce> {
             theme: MyAppTheme.themeData(themeChangeProvider.darkTheme, context),
             home: MyBottomNavigation(),
             routes: {
-              CategoriesNavigationRail.routeName: (ctx) =>
+              CategoriesNavigationRail.routeName: (context) =>
                   CategoriesNavigationRail(),
+              CartPage.routeName: (context) => CartPage(),
+              FeedsPage.routeName: (context) => FeedsPage(),
+              WishlistPage.routeName: (context) => WishlistPage()
             },
           );
         }));

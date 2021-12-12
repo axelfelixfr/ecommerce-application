@@ -65,7 +65,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
                     BottomNavigationBarItem(
                         icon: Icon(MyAppIcons.home), label: 'Inicio'),
                     BottomNavigationBarItem(
-                        icon: Icon(MyAppIcons.rss), label: 'Feeds'),
+                        icon: Icon(MyAppIcons.rss), label: 'Mercado'),
                     const BottomNavigationBarItem(
                         icon: Icon(null), activeIcon: null, label: 'Buscar'),
                     BottomNavigationBarItem(

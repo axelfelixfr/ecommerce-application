@@ -1,6 +1,7 @@
 import 'package:backdrop/app_bar.dart';
 import 'package:backdrop/backdrop.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
+import 'package:ecommerce_application/widgets/home_page/backlayer_menu.dart';
 import 'package:ecommerce_application/widgets/home_page/carousel_promos.dart';
 import 'package:ecommerce_application/widgets/home_page/inner_page/categories_navigation_rail.dart';
 import 'package:ecommerce_application/widgets/home_page/card_popular_product.dart';
@@ -23,16 +24,21 @@ class _HomePageState extends State<HomePage> {
                     Theme.of(context).scaffoldBackgroundColor,
                 headerHeight: MediaQuery.of(context).size.height * 0.25,
                 appBar: BackdropAppBar(
-                  title: Text("Home"),
+                  title: Text("Inicio"),
                   leading: BackdropToggleButton(icon: AnimatedIcons.home_menu),
                   flexibleSpace: Container(
                       decoration:
                           // BoxDecoration(color: Theme.of(context).backgroundColor)
                           BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                    MyAppColors.gradiendYStart,
-                    MyAppColors.gradiendYEnd
-                  ]))),
+                              gradient: LinearGradient(
+                                  colors: [
+                                    MyAppColors.gradiendYStart,
+                                    MyAppColors.gradiendYEnd
+                                  ],
+                                  begin: const FractionalOffset(0.0, 0.0),
+                                  end: const FractionalOffset(7.0, 0.0),
+                                  stops: [0.0, 0.1],
+                                  tileMode: TileMode.mirror))),
                   actions: <Widget>[
                     IconButton(
                         iconSize: 15,
@@ -47,9 +53,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: () {}),
                   ],
                 ),
-                backLayer: Center(
-                  child: Text("Back Layer"),
-                ),
+                backLayer: BackLayerMenu(),
                 frontLayer: SingleChildScrollView(
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
