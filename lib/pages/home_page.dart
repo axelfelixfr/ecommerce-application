@@ -5,6 +5,7 @@ import 'package:ecommerce_application/widgets/home_page/backlayer_menu.dart';
 import 'package:ecommerce_application/widgets/home_page/carousel_promos.dart';
 import 'package:ecommerce_application/widgets/home_page/inner_page/categories_navigation_rail.dart';
 import 'package:ecommerce_application/widgets/home_page/card_popular_product.dart';
+import 'package:ecommerce_application/widgets/home_page/list_other_categories.dart';
 import 'package:ecommerce_application/widgets/home_page/list_recipes.dart';
 import 'package:ecommerce_application/widgets/home_page/swiper_categories.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Recetas',
+                            'Otras categorías',
                             style: TextStyle(
                                 fontWeight: FontWeight.w800, fontSize: 20),
                           ),
@@ -97,9 +98,9 @@ class _HomePageState extends State<HomePage> {
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return ListRecipes(index: index);
+                                  return ListOtherCategories(index: index);
                                 },
-                                itemCount: 7)),
+                                itemCount: 6)),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(children: [
@@ -125,7 +126,24 @@ class _HomePageState extends State<HomePage> {
                                 itemCount: 8,
                                 itemBuilder: (BuildContext context, int index) {
                                   return CardPopularProduct();
-                                }))
+                                })),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Recetas',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w800, fontSize: 20),
+                          ),
+                        ),
+                        Container(
+                            width: double.infinity,
+                            height: 180,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ListRecipes(index: index);
+                                },
+                                itemCount: 7)),
                       ]),
                 ))));
   }

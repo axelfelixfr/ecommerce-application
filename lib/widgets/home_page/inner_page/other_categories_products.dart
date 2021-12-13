@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce_application/widgets/market_page/market_products.dart';
 import 'package:provider/provider.dart';
 
-class MarketPage extends StatelessWidget {
-  static const routeName = '/MarketPage';
+class OtherCategoriesProducts extends StatelessWidget {
+  static const routeName = '/OtherCategoriesProducts';
 
   @override
   Widget build(BuildContext context) {
-    final productsProvider = Provider.of<ProductsProvider>(context);
-    List<Product> listProducts = productsProvider.products;
+    final productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    final otherCategory = ModalRoute.of(context).settings.arguments as String;
+    List<Product> listProducts = productsProvider.findByCategory(otherCategory);
 
     return Scaffold(
         body:

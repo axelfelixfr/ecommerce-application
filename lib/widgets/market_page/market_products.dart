@@ -1,26 +1,10 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-
+import 'package:ecommerce_application/models/product.dart';
 import 'inner_page/product_details.dart';
+import 'package:provider/provider.dart';
 
 class MarketProducts extends StatefulWidget {
-  const MarketProducts(
-      {Key key,
-      @required this.id,
-      @required this.description,
-      @required this.price,
-      @required this.imageUrl,
-      @required this.quantity,
-      @required this.isFavorite})
-      : super(key: key);
-
-  final String id;
-  final String description;
-  final double price;
-  final String imageUrl;
-  final int quantity;
-  final bool isFavorite;
-
   @override
   _MarketProductsState createState() => _MarketProductsState();
 }
@@ -28,6 +12,8 @@ class MarketProducts extends StatefulWidget {
 class _MarketProductsState extends State<MarketProducts> {
   @override
   Widget build(BuildContext context) {
+    final productAttributes = Provider.of<Product>(context);
+
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: InkWell(
@@ -55,7 +41,7 @@ class _MarketProductsState extends State<MarketProducts> {
                             child: Image.network(
                                 // 'https://s1.qwant.com/thumbr/474x474/3/d/8ba8797bd23743207bcc11d77f13a4565520210c95bc1904d75ecfd33c7b94/th.jpg?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.aLe3QbdQKcyWxjvfUvxQQgHaHa%26pid%3DApi&q=0&b=1&p=0&a=0',
                                 // fit: BoxFit.fitWidth
-                                widget.imageUrl),
+                                productAttributes.imageUrl),
                           )),
                       Badge(
                         toAnimate: true,
@@ -79,7 +65,7 @@ class _MarketProductsState extends State<MarketProducts> {
                       children: [
                         SizedBox(height: 5),
                         Text(
-                          widget.description,
+                          productAttributes.description,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
@@ -87,7 +73,7 @@ class _MarketProductsState extends State<MarketProducts> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: Text('\$ ${widget.price}',
+                          child: Text('\$ ${productAttributes.price}',
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: TextStyle(
@@ -98,7 +84,7 @@ class _MarketProductsState extends State<MarketProducts> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Cantidad: ${widget.quantity}',
+                              Text('Cantidad: ${productAttributes.quantity}',
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600)),

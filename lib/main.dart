@@ -1,10 +1,12 @@
 import 'package:ecommerce_application/pages/cart_page.dart';
 import 'package:ecommerce_application/pages/market_page.dart';
 import 'package:ecommerce_application/pages/wishlist_page.dart';
+import 'package:ecommerce_application/widgets/home_page/inner_page/other_categories_products.dart';
 import 'package:ecommerce_application/widgets/market_page/inner_page/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/dark_theme_provider.dart';
+import 'providers/products_provider.dart';
 import 'utilities/my_app_theme.dart';
 import 'widgets/bottom_navigation.dart';
 import 'widgets/home_page/inner_page/categories_navigation_rail.dart';
@@ -39,7 +41,8 @@ class _AppEcommerceState extends State<AppEcommerce> {
         providers: [
           ChangeNotifierProvider(create: (_) {
             return themeChangeProvider;
-          })
+          }),
+          ChangeNotifierProvider(create: (_) => ProductsProvider())
         ],
         child:
             Consumer<DarkThemeProvider>(builder: (context, themeData, child) {
@@ -54,7 +57,9 @@ class _AppEcommerceState extends State<AppEcommerce> {
               CartPage.routeName: (context) => CartPage(),
               MarketPage.routeName: (context) => MarketPage(),
               WishlistPage.routeName: (context) => WishlistPage(),
-              ProductDetails.routeName: (context) => ProductDetails()
+              ProductDetails.routeName: (context) => ProductDetails(),
+              OtherCategoriesProducts.routeName: (context) =>
+                  OtherCategoriesProducts()
             },
           );
         }));

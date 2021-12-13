@@ -3,11 +3,37 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'inner_page/categories_navigation_rail.dart';
 
 class SwiperCategories extends StatefulWidget {
+  final int index;
+
+  const SwiperCategories({Key key, this.index}) : super(key: key);
   @override
   _SwiperCategoriesState createState() => _SwiperCategoriesState();
 }
 
 class _SwiperCategoriesState extends State<SwiperCategories> {
+  List<Map<String, Object>> categories = [
+    {
+      'categoryName': 'Verduras',
+      'categoryImagesPath': 'assets/img/swiper_1.png',
+    },
+    {
+      'categoryName': 'Frutas',
+      'categoryImagesPath': 'assets/img/swiper_2.png',
+    },
+    {
+      'categoryName': 'Carne',
+      'categoryImagesPath': 'assets/img/swiper_3.png',
+    },
+    {
+      'categoryName': 'Pollo',
+      'categoryImagesPath': 'assets/img/swiper_4.png',
+    },
+    {
+      'categoryName': 'Pescado',
+      'categoryImagesPath': 'assets/img/swiper_5.png',
+    }
+  ];
+
   List _swiperImages = [
     'assets/img/swiper_1.png',
     'assets/img/swiper_2.png',
@@ -27,12 +53,9 @@ class _SwiperCategoriesState extends State<SwiperCategories> {
           viewportFraction: 0.7,
           scale: 0.85,
           onTap: (index) {
-            Navigator.of(context).pushNamed(
-              CategoriesNavigationRail.routeName,
-              arguments: {
-                index,
-              },
-            );
+            Navigator.of(context).pushNamed(CategoriesNavigationRail.routeName,
+                arguments: '${categories[index]['categoryName']}');
+            // print('${categories[index]['categoryName']}');
           },
           itemBuilder: (BuildContext context, int index) {
             return ClipRRect(
@@ -40,9 +63,10 @@ class _SwiperCategoriesState extends State<SwiperCategories> {
               child: Container(
                 color: Color.fromARGB(255, 235, 235, 235),
                 child: Image.asset(
-                  _swiperImages[index],
-                  // fit: BoxFit.fill
-                ),
+                    // _swiperImages[index],
+                    categories[index]['categoryImagesPath']
+                    // fit: BoxFit.fill
+                    ),
               ),
             );
           },
