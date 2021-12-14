@@ -5,6 +5,7 @@ import 'package:ecommerce_application/widgets/home_page/inner_page/other_categor
 import 'package:ecommerce_application/widgets/market_page/inner_page/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'providers/cart_provider.dart';
 import 'providers/dark_theme_provider.dart';
 import 'providers/products_provider.dart';
 import 'utilities/my_app_theme.dart';
@@ -42,7 +43,8 @@ class _AppEcommerceState extends State<AppEcommerce> {
           ChangeNotifierProvider(create: (_) {
             return themeChangeProvider;
           }),
-          ChangeNotifierProvider(create: (_) => ProductsProvider())
+          ChangeNotifierProvider(create: (_) => ProductsProvider()),
+          ChangeNotifierProvider(create: (_) => CartProvider())
         ],
         child:
             Consumer<DarkThemeProvider>(builder: (context, themeData, child) {

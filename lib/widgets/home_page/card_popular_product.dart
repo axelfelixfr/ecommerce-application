@@ -1,7 +1,9 @@
 import 'package:ecommerce_application/models/product.dart';
+import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:ecommerce_application/widgets/market_page/inner_page/product_details.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
 class CardPopularProduct extends StatelessWidget {
@@ -17,6 +19,7 @@ class CardPopularProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productAttributes = Provider.of<Product>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -93,13 +96,31 @@ class CardPopularProduct extends StatelessWidget {
                                   child: Material(
                                       color: Colors.transparent,
                                       child: InkWell(
-                                          onTap: () {},
+                                          onTap: cartProvider.getCartItems
+                                                  .containsKey(
+                                                      productAttributes.id)
+                                              ? () {}
+                                              : () {
+                                                  cartProvider.addProductToCart(
+                                                      productAttributes.id,
+                                                      productAttributes.price,
+                                                      productAttributes.name,
+                                                      productAttributes
+                                                          .imageUrl);
+                                                },
                                           borderRadius:
                                               BorderRadius.circular(30.0),
                                           child: Padding(
                                             padding: const EdgeInsets.all(2.0),
-                                            child: Icon(MyAppIcons.addProduct,
-                                                size: 30, color: Colors.amber),
+                                            child: Icon(
+                                                cartProvider.getCartItems
+                                                        .containsKey(
+                                                            productAttributes
+                                                                .id)
+                                                    ? LineIcons.checkCircle
+                                                    : MyAppIcons.addProduct,
+                                                size: 30,
+                                                color: Colors.amber),
                                           ))),
                                 )
                               ])

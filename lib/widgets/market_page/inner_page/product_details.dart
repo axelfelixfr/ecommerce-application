@@ -1,5 +1,6 @@
 import 'package:ecommerce_application/pages/cart_page.dart';
 import 'package:ecommerce_application/pages/wishlist_page.dart';
+import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/providers/products_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
@@ -29,6 +30,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     final informationProduct = productsProvider.findByID(productId);
     // Lista de productos para sugerir otros productos
     final listProducts = productsProvider.products;
+    // Provider del carrito de compras
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return Scaffold(
         body: Stack(children: <Widget>[
@@ -226,9 +229,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(side: BorderSide.none),
                       color: Colors.redAccent.shade400,
-                      child: Text('Agregar al carrito'.toUpperCase(),
+                      child: Text(
+                          cartProvider.getCartItems.containsKey(productId)
+                              ? 'Agregar al carrito'.toUpperCase()
+                              : 'Ya esta en tu carrito'.toUpperCase(),
                           style: TextStyle(fontSize: 13, color: Colors.white)),
-                      onPressed: () {},
+                      onPressed:
+                          cartProvider.getCartItems.containsKey(productId)
+                              ? () {}
+                              : () {
+                                  cartProvider.addProductToCart(
+                                      productId,
+                                      informationProduct.price,
+                                      informationProduct.name,
+                                      informationProduct.imageUrl);
+                                },
                     ))),
             Expanded(
                 flex: 2,
