@@ -9,8 +9,12 @@ class MarketPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final popular = ModalRoute.of(context).settings.arguments as String;
     final productsProvider = Provider.of<ProductsProvider>(context);
     List<Product> listProducts = productsProvider.products;
+    if (popular == 'popular') {
+      listProducts = productsProvider.popularProducts;
+    }
 
     return Scaffold(
         body:

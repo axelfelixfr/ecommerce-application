@@ -1,10 +1,13 @@
+import 'package:ecommerce_application/models/product.dart';
+import 'package:ecommerce_application/providers/products_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'category_rail.dart';
 
 class CategoriesNavigationRail extends StatefulWidget {
   CategoriesNavigationRail({Key key}) : super(key: key);
 
-  static const routeName = '/brands_navigation_rail';
+  static const routeName = '/CategoriesNavigationRail';
   @override
   _CategoriesNavigationRailState createState() =>
       _CategoriesNavigationRailState();
@@ -14,7 +17,7 @@ class _CategoriesNavigationRailState extends State<CategoriesNavigationRail> {
   int _selectedIndex = 0;
   final padding = 8.0;
   String routeArgs;
-  String brand;
+  String category;
   @override
   void didChangeDependencies() {
     routeArgs = ModalRoute.of(context).settings.arguments.toString();
@@ -24,32 +27,32 @@ class _CategoriesNavigationRailState extends State<CategoriesNavigationRail> {
     print(routeArgs.toString());
     if (_selectedIndex == 0) {
       setState(() {
-        brand = 'Verduras';
+        category = 'Verdura';
       });
     }
     if (_selectedIndex == 1) {
       setState(() {
-        brand = 'Frutas';
+        category = 'Fruta';
       });
     }
     if (_selectedIndex == 2) {
       setState(() {
-        brand = 'Carne';
+        category = 'Carne';
       });
     }
     if (_selectedIndex == 3) {
       setState(() {
-        brand = 'Pollo';
+        category = 'Pollo';
       });
     }
     if (_selectedIndex == 4) {
       setState(() {
-        brand = 'Pescado';
+        category = 'Pescado';
       });
     }
     if (_selectedIndex == 5) {
       setState(() {
-        brand = 'Todo';
+        category = 'Todo';
       });
     }
     super.didChangeDependencies();
@@ -75,35 +78,35 @@ class _CategoriesNavigationRailState extends State<CategoriesNavigationRail> {
                           _selectedIndex = index;
                           if (_selectedIndex == 0) {
                             setState(() {
-                              brand = 'Verduras';
+                              category = 'Verdura';
                             });
                           }
                           if (_selectedIndex == 1) {
                             setState(() {
-                              brand = 'Frutas';
+                              category = 'Fruta';
                             });
                           }
                           if (_selectedIndex == 2) {
                             setState(() {
-                              brand = 'Carne';
+                              category = 'Carne';
                             });
                           }
                           if (_selectedIndex == 3) {
                             setState(() {
-                              brand = 'Pollo';
+                              category = 'Pollo';
                             });
                           }
                           if (_selectedIndex == 4) {
                             setState(() {
-                              brand = 'Pescado';
+                              category = 'Pescado';
                             });
                           }
                           if (_selectedIndex == 5) {
                             setState(() {
-                              brand = 'Todo';
+                              category = 'Todo';
                             });
                           }
-                          print(brand);
+                          print(category);
                         });
                       },
                       labelType: NavigationRailLabelType.all,
@@ -136,8 +139,8 @@ class _CategoriesNavigationRailState extends State<CategoriesNavigationRail> {
                         letterSpacing: 0.8,
                       ),
                       destinations: [
-                        buildRotatedTextRailDestination("Verduras 🥬", padding),
-                        buildRotatedTextRailDestination("Frutas 🍉", padding),
+                        buildRotatedTextRailDestination("Verdura 🥬", padding),
+                        buildRotatedTextRailDestination("Fruta 🍉", padding),
                         buildRotatedTextRailDestination("Carne 🥩", padding),
                         buildRotatedTextRailDestination("Pollo 🍗", padding),
                         buildRotatedTextRailDestination("Pescado 🍤", padding),
@@ -151,7 +154,7 @@ class _CategoriesNavigationRailState extends State<CategoriesNavigationRail> {
           ),
           // This is the main content.
 
-          ContentSpace(context, brand)
+          ContentSpace(context, category)
         ],
       ),
     );
@@ -175,11 +178,22 @@ NavigationRailDestination buildRotatedTextRailDestination(
 class ContentSpace extends StatelessWidget {
   // final int _selectedIndex;
 
-  final String brand;
-  ContentSpace(BuildContext context, this.brand);
+  final String category;
+  ContentSpace(BuildContext context, this.category);
 
   @override
   Widget build(BuildContext context) {
+    final productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    List<Product> listProductsForCategory =
+        productsProvider.findByCategory(category);
+    // Si se selecciona 'Todo', entonces iteramos todos los productos que existen en productsProvider
+    if (category == 'Todo') {
+      for (int i = 0; i < productsProvider.products.length; i++) {
+        listProductsForCategory.add(productsProvider.products[i]);
+      }
+    }
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(24, 8, 0, 0),
@@ -187,8 +201,11 @@ class ContentSpace extends StatelessWidget {
           removeTop: true,
           context: context,
           child: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) => CategoryRail(),
+            itemCount: listProductsForCategory.length,
+            itemBuilder: (BuildContext context, int index) =>
+                ChangeNotifierProvider.value(
+                    value: listProductsForCategory[index],
+                    child: CategoryRail()),
           ),
         ),
       ),

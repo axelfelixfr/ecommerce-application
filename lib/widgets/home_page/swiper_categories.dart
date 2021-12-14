@@ -13,11 +13,11 @@ class SwiperCategories extends StatefulWidget {
 class _SwiperCategoriesState extends State<SwiperCategories> {
   List<Map<String, Object>> categories = [
     {
-      'categoryName': 'Verduras',
+      'categoryName': 'Verdura',
       'categoryImagesPath': 'assets/img/swiper_1.png',
     },
     {
-      'categoryName': 'Frutas',
+      'categoryName': 'Fruta',
       'categoryImagesPath': 'assets/img/swiper_2.png',
     },
     {
@@ -53,9 +53,11 @@ class _SwiperCategoriesState extends State<SwiperCategories> {
           viewportFraction: 0.7,
           scale: 0.85,
           onTap: (index) {
-            Navigator.of(context).pushNamed(CategoriesNavigationRail.routeName,
-                arguments: '${categories[index]['categoryName']}');
+            // Navigator.of(context).pushNamed(CategoriesNavigationRail.routeName,
+            // arguments: '${categories[index]['categoryName']}');
             // print('${categories[index]['categoryName']}');
+            Navigator.of(context).pushNamed(CategoriesNavigationRail.routeName,
+                arguments: {index});
           },
           itemBuilder: (BuildContext context, int index) {
             return ClipRRect(

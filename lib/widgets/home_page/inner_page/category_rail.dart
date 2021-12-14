@@ -1,10 +1,15 @@
+import 'package:ecommerce_application/models/product.dart';
+import 'package:ecommerce_application/widgets/market_page/inner_page/product_details.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CategoryRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final productAttributes = Provider.of<Product>(context);
     return InkWell(
-      onTap: () {},
+      onTap: () => Navigator.pushNamed(context, ProductDetails.routeName,
+          arguments: productAttributes.id),
       child: Container(
         padding: EdgeInsets.only(left: 5.0, right: 5.0),
         margin: EdgeInsets.only(right: 20.0, bottom: 5, top: 18),
@@ -17,9 +22,7 @@ class CategoryRail extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).backgroundColor,
                   image: DecorationImage(
-                      image: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4PdHtXka2-bDDww6Nuect3Mt9IwpE4v4HNw&usqp=CAU',
-                      ),
+                      image: NetworkImage(productAttributes.imageUrl),
                       fit: BoxFit.contain),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   boxShadow: [
@@ -51,7 +54,7 @@ class CategoryRail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'title',
+                      productAttributes.name,
                       maxLines: 4,
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
@@ -61,7 +64,7 @@ class CategoryRail extends StatelessWidget {
                       height: 20.0,
                     ),
                     FittedBox(
-                      child: Text('US 16 \$',
+                      child: Text('\$ ${productAttributes.price}',
                           maxLines: 1,
                           style: TextStyle(
                             color: Colors.red,
@@ -71,7 +74,7 @@ class CategoryRail extends StatelessWidget {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Text('CatergoryName',
+                    Text(productAttributes.productCategoryName,
                         style: TextStyle(color: Colors.grey, fontSize: 18.0)),
                     SizedBox(
                       height: 20.0,

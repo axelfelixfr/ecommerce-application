@@ -17,7 +17,8 @@ class _MarketProductsState extends State<MarketProducts> {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, ProductDetails.routeName),
+        onTap: () => Navigator.pushNamed(context, ProductDetails.routeName,
+            arguments: productAttributes.id),
         child: Container(
             width: 250,
             height: 290,

@@ -1,5 +1,7 @@
 import 'package:backdrop/app_bar.dart';
 import 'package:backdrop/backdrop.dart';
+import 'package:ecommerce_application/pages/market_page.dart';
+import 'package:ecommerce_application/providers/products_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/widgets/home_page/backlayer_menu.dart';
 import 'package:ecommerce_application/widgets/home_page/carousel_promos.dart';
@@ -9,6 +11,7 @@ import 'package:ecommerce_application/widgets/home_page/list_other_categories.da
 import 'package:ecommerce_application/widgets/home_page/list_recipes.dart';
 import 'package:ecommerce_application/widgets/home_page/swiper_categories.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,6 +21,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    final listPopularProducts = productsProvider.popularProducts;
+
     return Scaffold(
         body: Center(
             child: BackdropScaffold(
@@ -25,7 +32,7 @@ class _HomePageState extends State<HomePage> {
                     Theme.of(context).scaffoldBackgroundColor,
                 headerHeight: MediaQuery.of(context).size.height * 0.25,
                 appBar: BackdropAppBar(
-                  title: Text("Inicio"),
+                  title: Text("Mercado a Distancia"),
                   leading: BackdropToggleButton(icon: AnimatedIcons.home_menu),
                   flexibleSpace: Container(
                       decoration:
@@ -109,7 +116,11 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.w800, fontSize: 20)),
                             Spacer(),
                             FlatButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                      MarketPage.routeName,
+                                      arguments: 'popular');
+                                },
                                 child: Text('Ver todo...',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w800,
@@ -123,9 +134,21 @@ class _HomePageState extends State<HomePage> {
                             margin: EdgeInsets.symmetric(horizontal: 3),
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: 8,
+                                itemCount: listPopularProducts.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return CardPopularProduct();
+                                  return ChangeNotifierProvider.value(
+                                      value: listPopularProducts[index],
+                                      child: CardPopularProduct()
+                                      /* 
+                                    CardPopularProduct(
+                                        name: listPopularProducts[index].name,
+                                        imageUrl:
+                                            listPopularProducts[index].imageUrl,
+                                        price: listPopularProducts[index].price,
+                                        description: listPopularProducts[index]
+                                            .description
+                                        ),*/
+                                      );
                                 })),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
