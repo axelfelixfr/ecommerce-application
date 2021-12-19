@@ -22,6 +22,11 @@ class CardPopularProduct extends StatelessWidget {
     final productAttributes = Provider.of<Product>(context);
     final cartProvider = Provider.of<CartProvider>(context);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
+    // Para saber si el producto ya esta en el carrito o no
+    bool productInCart =
+        cartProvider.getCartItems.containsKey(productAttributes.id);
+    bool productInWishlist =
+        wishlistProvider.getWishlistItems.containsKey(productAttributes.id);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -53,14 +58,15 @@ class CardPopularProduct extends StatelessWidget {
                   ),
                   Positioned(
                       child: Icon(Icons.star,
-                          color: wishlistProvider.getWishlistItems
-                                  .containsKey(productAttributes.id)
-                              ? Colors.pink
-                              : Colors.grey.shade800),
+                          color:
+                              productInWishlist ? Colors.amber : Colors.white),
                       right: 12,
                       top: 10),
                   Positioned(
-                      child: Icon(Icons.star_outline, color: Colors.white),
+                      child: Icon(Icons.star_outline,
+                          color: productInWishlist
+                              ? Colors.transparent
+                              : Colors.black54),
                       right: 12,
                       top: 10),
                   Positioned(
@@ -118,14 +124,14 @@ class CardPopularProduct extends StatelessWidget {
                                           child: Padding(
                                             padding: const EdgeInsets.all(2.0),
                                             child: Icon(
-                                                cartProvider.getCartItems
-                                                        .containsKey(
-                                                            productAttributes
-                                                                .id)
-                                                    ? LineIcons.checkCircle
+                                                productInCart
+                                                    ? LineIcons
+                                                        .shoppingCartArrowDown
                                                     : MyAppIcons.addProduct,
                                                 size: 30,
-                                                color: Colors.amber),
+                                                color: productInCart
+                                                    ? Colors.amber
+                                                    : Colors.black87),
                                           ))),
                                 )
                               ])

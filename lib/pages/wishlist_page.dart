@@ -25,7 +25,7 @@ class WishlistPage extends StatelessWidget {
                       onPressed: () {
                         globalMethods.showDialogAlert(
                             context,
-                            'Limpiar lista de favoritos',
+                            'Limpiar lista',
                             '¿Deseas limpiar tu lista de favoritos?',
                             () => wishlistProvider.clearWishlist());
                       },

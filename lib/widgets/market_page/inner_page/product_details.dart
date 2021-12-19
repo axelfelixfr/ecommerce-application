@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:ecommerce_application/pages/cart_page.dart';
 import 'package:ecommerce_application/pages/wishlist_page.dart';
 import 'package:ecommerce_application/providers/cart_provider.dart';
@@ -208,17 +209,43 @@ class _ProductDetailsState extends State<ProductDetails> {
                       fontSize: 17.0,
                       fontWeight: FontWeight.w500)),
               actions: <Widget>[
-                IconButton(
-                  icon: Icon(MyAppIcons.wishlist, color: MyAppColors.favColor),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(WishlistPage.routeName);
-                  },
+                Consumer<WishlistProvider>(
+                  builder: (_, wishl, ch) => Badge(
+                    badgeColor: MyAppColors.cartBadgeColor,
+                    animationType: BadgeAnimationType.slide,
+                    toAnimate: true,
+                    position: BadgePosition.topEnd(top: 5, end: 7),
+                    badgeContent: Text(
+                      wishl.getWishlistItems.length.toString(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    child: IconButton(
+                      icon: Icon(MyAppIcons.wishlist,
+                          color: MyAppColors.favColor),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(WishlistPage.routeName);
+                      },
+                    ),
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(MyAppIcons.shopping, color: MyAppColors.cartColor),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(CartPage.routeName);
-                  },
+                Consumer<CartProvider>(
+                  builder: (_, cart, ch) => Badge(
+                    badgeColor: MyAppColors.cartBadgeColor,
+                    animationType: BadgeAnimationType.slide,
+                    toAnimate: true,
+                    position: BadgePosition.topEnd(top: 5, end: 7),
+                    badgeContent: Text(
+                      cart.getCartItems.length.toString(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    child: IconButton(
+                      icon: Icon(MyAppIcons.shopping,
+                          color: MyAppColors.cartColor),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(CartPage.routeName);
+                      },
+                    ),
+                  ),
                 ),
               ])),
       Align(

@@ -10,7 +10,7 @@ class GlobalMethods {
         builder: (BuildContext context) {
           return AlertDialog(
               title: Row(children: [
-                Icon(LineIcons.exclamationCircle),
+                Icon(LineIcons.exclamationCircle, color: Colors.red[400]),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(title),

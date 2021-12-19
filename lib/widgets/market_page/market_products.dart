@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:ecommerce_application/widgets/market_page/inner_page/product_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_application/models/product.dart';
 import 'inner_page/product_details.dart';
@@ -51,8 +52,8 @@ class _MarketProductsState extends State<MarketProducts> {
                         badgeColor: Colors.pink,
                         borderRadius:
                             BorderRadius.only(bottomRight: Radius.circular(8)),
-                        badgeContent:
-                            Text('New', style: TextStyle(color: Colors.white)),
+                        badgeContent: Text('Nuevo',
+                            style: TextStyle(color: Colors.white)),
                       )
                     ],
                   ),
@@ -92,7 +93,14 @@ class _MarketProductsState extends State<MarketProducts> {
                               Material(
                                   color: Colors.transparent,
                                   child: InkWell(
-                                      onTap: () {},
+                                      onTap: () async {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                ProductModal(
+                                                    productId:
+                                                        productAttributes.id));
+                                      },
                                       borderRadius: BorderRadius.circular(18.0),
                                       child: Icon(
                                         Icons.more_horiz,
