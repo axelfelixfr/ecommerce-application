@@ -119,7 +119,7 @@ class ProductModal extends StatelessWidget {
           ? Icons.favorite
           : Icons.favorite_border,
       LineIcons.eye,
-      wishlist.getWishlistItems.containsKey(productId)
+      cart.getCartItems.containsKey(productId)
           ? LineIcons.shoppingCartArrowDown
           : MyAppIcons.addProduct,
     ];
