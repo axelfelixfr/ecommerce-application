@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'providers/cart_provider.dart';
 import 'providers/dark_theme_provider.dart';
 import 'providers/products_provider.dart';
+import 'providers/wishlist_provider.dart';
 import 'utilities/my_app_theme.dart';
 import 'widgets/bottom_navigation.dart';
 import 'widgets/home_page/inner_page/categories_navigation_rail.dart';
@@ -44,7 +45,8 @@ class _AppEcommerceState extends State<AppEcommerce> {
             return themeChangeProvider;
           }),
           ChangeNotifierProvider(create: (_) => ProductsProvider()),
-          ChangeNotifierProvider(create: (_) => CartProvider())
+          ChangeNotifierProvider(create: (_) => CartProvider()),
+          ChangeNotifierProvider(create: (_) => WishlistProvider()),
         ],
         child:
             Consumer<DarkThemeProvider>(builder: (context, themeData, child) {

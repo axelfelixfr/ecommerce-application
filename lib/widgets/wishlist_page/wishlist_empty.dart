@@ -1,3 +1,4 @@
+import 'package:ecommerce_application/pages/market_page.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
@@ -41,7 +42,8 @@ class WishlistEmpty extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.7,
         height: MediaQuery.of(context).size.height * 0.06,
         child: RaisedButton(
-            onPressed: () {},
+            onPressed: () =>
+                {Navigator.of(context).pushNamed(MarketPage.routeName)},
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
               side: BorderSide(color: Colors.amberAccent),

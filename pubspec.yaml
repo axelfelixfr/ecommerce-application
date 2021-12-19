@@ -45,6 +45,7 @@ dependencies:
   carousel_pro: ^1.0.0
   # Widget Swiper
   flutter_swiper: ^1.1.6
+  # Navigation Bar
   animated_bottom_navigation_bar: ^0.2.1
   auto_size_text: ^2.1.0
   circular_reveal_animation: ^1.1.5

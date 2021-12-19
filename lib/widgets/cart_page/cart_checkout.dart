@@ -1,3 +1,4 @@
+import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ class CartCheckout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return Container(
         decoration: BoxDecoration(
@@ -37,7 +39,7 @@ class CartCheckout extends StatelessWidget {
                             onTap: () {},
                             child: Padding(
                                 padding: const EdgeInsets.all(6.0),
-                                child: Text('Checkout',
+                                child: Text('Comprar',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Theme.of(context)
@@ -54,7 +56,8 @@ class CartCheckout extends StatelessWidget {
                         fontWeight: FontWeight.w600)),
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
-                  child: Text('\$170.00',
+                  child: Text(
+                      '\$ ${cartProvider.totalAmount.toStringAsFixed(2)}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: themeChange.darkTheme

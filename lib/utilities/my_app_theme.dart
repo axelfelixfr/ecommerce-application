@@ -8,7 +8,7 @@ class MyAppTheme {
       scaffoldBackgroundColor: isDarkTheme
           ? Color.fromARGB(255, 33, 33, 33)
           : Color.fromARGB(255, 242, 242, 242),
-      primarySwatch: Colors.purple,
+      primarySwatch: Colors.pink,
       primaryColor: isDarkTheme
           ? Color.fromARGB(255, 33, 33, 33)
           : Color.fromARGB(255, 242, 242, 242),

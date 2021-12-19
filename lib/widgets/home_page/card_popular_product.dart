@@ -1,5 +1,6 @@
 import 'package:ecommerce_application/models/product.dart';
 import 'package:ecommerce_application/providers/cart_provider.dart';
+import 'package:ecommerce_application/providers/wishlist_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:ecommerce_application/widgets/market_page/inner_page/product_details.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class CardPopularProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     final productAttributes = Provider.of<Product>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -50,12 +52,15 @@ class CardPopularProduct extends StatelessWidget {
                             fit: BoxFit.contain)),
                   ),
                   Positioned(
-                      child:
-                          Icon(Icons.star_outline, color: Colors.grey.shade800),
+                      child: Icon(Icons.star,
+                          color: wishlistProvider.getWishlistItems
+                                  .containsKey(productAttributes.id)
+                              ? Colors.pink
+                              : Colors.grey.shade800),
                       right: 12,
                       top: 10),
                   Positioned(
-                      child: Icon(Icons.star, color: Colors.white),
+                      child: Icon(Icons.star_outline, color: Colors.white),
                       right: 12,
                       top: 10),
                   Positioned(

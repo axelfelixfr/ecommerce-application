@@ -1,4 +1,6 @@
+import 'package:ecommerce_application/helpers/global_methods.dart';
 import 'package:ecommerce_application/models/cart.dart';
+import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/widgets/market_page/inner_page/product_details.dart';
@@ -35,8 +37,14 @@ class _CartProductsState extends State<CartProducts> {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    // Información del carrito tomando el modelo
     final informationCart = Provider.of<Cart>(context);
     double subtotal = informationCart.price * informationCart.quantity;
+    // Provider del carrito de compras
+    final cartProvider = Provider.of<CartProvider>(context);
+    // Metodos globales de los helpers
+    GlobalMethods globalMethods = GlobalMethods();
+
     return InkWell(
       onTap: () => Navigator.pushNamed(context, ProductDetails.routeName,
           arguments: widget.productId),
@@ -57,8 +65,9 @@ class _CartProductsState extends State<CartProducts> {
                 width: 135,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(informationCart.imageUrl),
-                        fit: BoxFit.contain)),
+                  image: NetworkImage(informationCart.imageUrl),
+                  // fit: BoxFit.contain
+                )),
               ),
             ),
             Flexible(
@@ -80,7 +89,14 @@ class _CartProductsState extends State<CartProducts> {
                         child: InkWell(
                             borderRadius: BorderRadius.circular(32.0),
                             // splashColor: ,
-                            onTap: () {},
+                            onTap: () {
+                              globalMethods.showDialogAlert(
+                                  context,
+                                  'Quitar producto',
+                                  '¿Deseas quitar este producto de tu carrito?',
+                                  () => cartProvider
+                                      .removeItem(widget.productId));
+                            },
                             child: Container(
                                 height: 50,
                                 width: 50,
@@ -101,11 +117,13 @@ class _CartProductsState extends State<CartProducts> {
                   Row(children: [
                     Text('Subtotal:'),
                     SizedBox(width: 5),
-                    Text('\$ $subtotal',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).accentColor))
+                    FittedBox(
+                      child: Text('\$ ${subtotal.toStringAsFixed(2)}',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).accentColor)),
+                    )
                   ]),
                   Row(
                     children: [
@@ -118,10 +136,22 @@ class _CartProductsState extends State<CartProducts> {
                         child: InkWell(
                             borderRadius: BorderRadius.circular(5.0),
                             // splashColor: ,
-                            onTap: () {},
+                            onTap: informationCart.quantity < 2
+                                ? null
+                                : () {
+                                    cartProvider.reduceItemByOne(
+                                      widget.productId,
+                                      // informationCart.price,
+                                      // informationCart.name,
+                                      // informationCart.imageUrl
+                                    );
+                                  },
                             child: Container(
                                 child: Icon(LineIcons.minus,
-                                    color: Colors.redAccent, size: 22))),
+                                    color: informationCart.quantity < 2
+                                        ? Colors.grey
+                                        : Colors.redAccent,
+                                    size: 22))),
                       ),
                       Card(
                           elevation: 12,
@@ -145,7 +175,13 @@ class _CartProductsState extends State<CartProducts> {
                         child: InkWell(
                             borderRadius: BorderRadius.circular(4.0),
                             // splashColor: ,
-                            onTap: () {},
+                            onTap: () {
+                              cartProvider.addProductToCart(
+                                  widget.productId,
+                                  informationCart.price,
+                                  informationCart.name,
+                                  informationCart.imageUrl);
+                            },
                             child: Container(
                                 child: Padding(
                               padding: const EdgeInsets.all(5.0),

@@ -3,6 +3,7 @@ import 'package:ecommerce_application/pages/wishlist_page.dart';
 import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/providers/products_provider.dart';
+import 'package:ecommerce_application/providers/wishlist_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:ecommerce_application/widgets/market_page/market_products.dart';
@@ -32,6 +33,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     final listProducts = productsProvider.products;
     // Provider del carrito de compras
     final cartProvider = Provider.of<CartProvider>(context);
+    // Provider para wishlist
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
 
     return Scaffold(
         body: Stack(children: <Widget>[
@@ -229,10 +232,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(side: BorderSide.none),
                       color: Colors.redAccent.shade400,
+                      /* 
+                      child: Text(
+                        cartProvider.getCartItems.containsKey(productId)
+                            ? 'In cart'
+                            : 'Add to Cart'.toUpperCase(),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                      */
                       child: Text(
                           cartProvider.getCartItems.containsKey(productId)
-                              ? 'Agregar al carrito'.toUpperCase()
-                              : 'Ya esta en tu carrito'.toUpperCase(),
+                              ? 'Ya esta en tu carrito'.toUpperCase()
+                              : 'Agregar al carrito'.toUpperCase(),
                           style: TextStyle(fontSize: 13, color: Colors.white)),
                       onPressed:
                           cartProvider.getCartItems.containsKey(productId)
@@ -276,9 +287,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: InkWell(
                       splashColor: MyAppColors.favColor,
                       child: Center(
-                          child:
-                              Icon(MyAppIcons.wishlist, color: Colors.white)),
-                      onTap: () {},
+                          child: Icon(
+                              wishlistProvider.getWishlistItems
+                                      .containsKey(productId)
+                                  ? Icons.favorite
+                                  : MyAppIcons.wishlist,
+                              color: wishlistProvider.getWishlistItems
+                                      .containsKey(productId)
+                                  ? Colors.redAccent
+                                  : Colors.white)),
+                      onTap: () {
+                        wishlistProvider.addAndRemoveFromWishlist(
+                            productId,
+                            informationProduct.price,
+                            informationProduct.name,
+                            informationProduct.imageUrl);
+                      },
                     ))),
           ]))
     ]));

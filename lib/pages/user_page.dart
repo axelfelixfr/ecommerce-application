@@ -1,3 +1,4 @@
+import 'package:ecommerce_application/pages/cart_page.dart';
 import 'package:ecommerce_application/pages/wishlist_page.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
@@ -126,7 +127,8 @@ class _UserPageState extends State<UserPage> {
                 child: InkWell(
                     splashColor: Theme.of(context).splashColor,
                     child: ListTile(
-                      onTap: () {},
+                      onTap: () =>
+                          Navigator.of(context).pushNamed(CartPage.routeName),
                       title: Text('Mi carrito'),
                       trailing: Icon(LineIcons.angleRight),
                       leading: Icon(MyAppIcons.shopping),
@@ -172,17 +174,10 @@ class _UserPageState extends State<UserPage> {
                           return AlertDialog(
                             title: Row(
                               children: [
+                                Icon(LineIcons.alternateSignOut),
                                 Padding(
-                                  padding: EdgeInsets.only(right: 6.0),
-                                  child: Image.network(
-                                    'https://image.flaticon.com/icons/png/128/1828/1828304.png',
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text('Sign out'),
+                                  padding: EdgeInsets.only(left: 8.0),
+                                  child: Text('Cerrar sesión'),
                                 ),
                               ],
                             ),
@@ -203,11 +198,18 @@ class _UserPageState extends State<UserPage> {
                                   children: <Widget>[
                                     Positioned.fill(
                                       child: Container(
-                                        decoration: BoxDecoration(
-                                          color:
-                                              Color.fromARGB(255, 255, 193, 7),
-                                        ),
-                                      ),
+                                          decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    MyAppColors.gradiendYStart,
+                                                    MyAppColors.gradiendYEnd
+                                                  ],
+                                                  begin: const FractionalOffset(
+                                                      0.0, 0.0),
+                                                  end: const FractionalOffset(
+                                                      5.0, 9.0),
+                                                  stops: [0.0, 0.1],
+                                                  tileMode: TileMode.mirror))),
                                     ),
                                     TextButton(
                                       style: TextButton.styleFrom(

@@ -1,3 +1,4 @@
+import 'package:ecommerce_application/helpers/global_methods.dart';
 import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:ecommerce_application/widgets/cart_page/cart_checkout.dart';
@@ -12,13 +13,26 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
+    GlobalMethods globalMethods = GlobalMethods();
 
     return cartProvider.getCartItems.isEmpty
         ? Scaffold(body: CartEmpty())
         : Scaffold(
-            appBar: AppBar(title: Text('Productos en tu carrito'), actions: [
-              IconButton(onPressed: () {}, icon: Icon(MyAppIcons.trash))
-            ]),
+            appBar: AppBar(
+                backgroundColor: Theme.of(context).backgroundColor,
+                title: Text(
+                    'Productos en tu carrito (${cartProvider.getCartItems.length})'),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        globalMethods.showDialogAlert(
+                            context,
+                            'Limpiar carrito',
+                            '¿Deseas limpiar tu carrito de compras?',
+                            () => cartProvider.clearCart());
+                      },
+                      icon: Icon(MyAppIcons.trash))
+                ]),
             body: Container(
               margin: EdgeInsets.only(bottom: 60),
               child: ListView.builder(
