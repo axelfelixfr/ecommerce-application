@@ -157,7 +157,7 @@ class _CartProductsState extends State<CartProducts> {
                           elevation: 12,
                           child: Container(
                               width: MediaQuery.of(context).size.width * 0.12,
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(5.0),
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                       colors: [

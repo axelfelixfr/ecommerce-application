@@ -1,7 +1,12 @@
 import 'package:ecommerce_application/pages/cart_page.dart';
+import 'package:ecommerce_application/pages/landing_page.dart';
+import 'package:ecommerce_application/pages/login_page.dart';
 import 'package:ecommerce_application/pages/market_page.dart';
+import 'package:ecommerce_application/pages/sign_up_page.dart';
 import 'package:ecommerce_application/pages/wishlist_page.dart';
+import 'package:ecommerce_application/widgets/bottom_navigation.dart';
 import 'package:ecommerce_application/widgets/home_page/inner_page/other_categories_products.dart';
+import 'package:ecommerce_application/widgets/home_page/inner_page/upload_product.dart';
 import 'package:ecommerce_application/widgets/market_page/inner_page/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +15,6 @@ import 'providers/dark_theme_provider.dart';
 import 'providers/products_provider.dart';
 import 'providers/wishlist_provider.dart';
 import 'utilities/my_app_theme.dart';
-import 'widgets/bottom_navigation.dart';
 import 'widgets/home_page/inner_page/categories_navigation_rail.dart';
 
 void main() {
@@ -54,7 +58,7 @@ class _AppEcommerceState extends State<AppEcommerce> {
             title: 'Mercado a Distancia',
             debugShowCheckedModeBanner: false,
             theme: MyAppTheme.themeData(themeChangeProvider.darkTheme, context),
-            home: MyBottomNavigation(),
+            home: LandingPage(),
             routes: {
               CategoriesNavigationRail.routeName: (context) =>
                   CategoriesNavigationRail(),
@@ -63,7 +67,11 @@ class _AppEcommerceState extends State<AppEcommerce> {
               WishlistPage.routeName: (context) => WishlistPage(),
               ProductDetails.routeName: (context) => ProductDetails(),
               OtherCategoriesProducts.routeName: (context) =>
-                  OtherCategoriesProducts()
+                  OtherCategoriesProducts(),
+              LoginPage.routeName: (context) => LoginPage(),
+              SignUpPage.routeName: (context) => SignUpPage(),
+              MyBottomNavigation.routeName: (context) => MyBottomNavigation(),
+              UploadProduct.routeName: (context) => UploadProduct()
             },
           );
         }));

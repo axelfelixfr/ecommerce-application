@@ -10,8 +10,10 @@ import 'package:ecommerce_application/widgets/home_page/card_popular_product.dar
 import 'package:ecommerce_application/widgets/home_page/list_other_categories.dart';
 import 'package:ecommerce_application/widgets/home_page/list_recipes.dart';
 import 'package:ecommerce_application/widgets/home_page/swiper_categories.dart';
+import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:line_icons/line_icons.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -83,11 +85,17 @@ class _HomePageState extends State<HomePage> {
                                     },
                                   );
                                 },
-                                child: Text('Ver todo...',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 15,
-                                        color: Colors.pink)))
+                                child: Row(
+                                  children: [
+                                    Text('Ver todo',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 15,
+                                            color: MyAppColors.cartColor)),
+                                    Icon(LineIcons.chevronRight,
+                                        color: MyAppColors.cartColor)
+                                  ],
+                                ))
                           ]),
                         ),
                         SwiperCategories(),
@@ -121,11 +129,17 @@ class _HomePageState extends State<HomePage> {
                                       MarketPage.routeName,
                                       arguments: 'popular');
                                 },
-                                child: Text('Ver todo...',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 15,
-                                        color: Colors.pink)))
+                                child: Row(
+                                  children: [
+                                    Text('Ver todo',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 15,
+                                            color: MyAppColors.cartColor)),
+                                    Icon(LineIcons.chevronRight,
+                                        color: MyAppColors.cartColor)
+                                  ],
+                                ))
                           ]),
                         ),
                         Container(

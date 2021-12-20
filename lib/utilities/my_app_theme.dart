@@ -1,10 +1,17 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyAppTheme {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
+      textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme.apply(
+          bodyColor: isDarkTheme
+              ? Color.fromARGB(255, 242, 242, 242)
+              : Color.fromARGB(255, 33, 33, 33))),
+      primaryTextTheme:
+          GoogleFonts.montserratTextTheme(Theme.of(context).primaryTextTheme),
       scaffoldBackgroundColor: isDarkTheme
           ? Color.fromARGB(255, 33, 33, 33)
           : Color.fromARGB(255, 242, 242, 242),

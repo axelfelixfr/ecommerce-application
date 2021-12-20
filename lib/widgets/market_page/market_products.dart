@@ -61,11 +61,11 @@ class _MarketProductsState extends State<MarketProducts> {
               ),
               Container(
                   padding: EdgeInsets.only(left: 5),
-                  margin: EdgeInsets.only(bottom: 2, left: 5, right: 3),
+                  margin: EdgeInsets.only(bottom: 0, left: 5, right: 3),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 5),
+                        SizedBox(height: 1),
                         Text(
                           productAttributes.description,
                           overflow: TextOverflow.ellipsis,

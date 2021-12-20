@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MyBottomNavigation extends StatefulWidget {
+  static const routeName = '/HomeBottomNavigation';
+
   @override
   _MyBottomNavigationState createState() => _MyBottomNavigationState();
 }

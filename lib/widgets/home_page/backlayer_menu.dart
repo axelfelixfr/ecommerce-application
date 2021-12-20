@@ -1,5 +1,6 @@
 import 'package:ecommerce_application/pages/cart_page.dart';
 import 'package:ecommerce_application/pages/market_page.dart';
+import 'package:ecommerce_application/widgets/home_page/inner_page/upload_product.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class _BackLayerMenuState extends State<BackLayerMenu> {
       ),
       SingleChildScrollView(
           child: Container(
-              margin: EdgeInsets.all(50),
+              margin: EdgeInsets.all(30),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -86,8 +87,8 @@ class _BackLayerMenuState extends State<BackLayerMenu> {
                     Center(
                         child: Container(
                             padding: const EdgeInsets.all(6.0),
-                            height: 100,
-                            width: 100,
+                            height: 90,
+                            width: 90,
                             decoration: BoxDecoration(
                                 color: Theme.of(context).backgroundColor,
                                 borderRadius: BorderRadius.circular(10.0)),
@@ -109,7 +110,7 @@ class _BackLayerMenuState extends State<BackLayerMenu> {
                       navigateTo(context, MarketPage.routeName);
                     }, "Favoritos", 2),
                     contentBackLayer(() {
-                      navigateTo(context, MarketPage.routeName);
+                      navigateTo(context, UploadProduct.routeName);
                     }, "Subir nuevo producto", 3)
                   ])))
     ]);

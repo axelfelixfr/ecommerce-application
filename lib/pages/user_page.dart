@@ -3,6 +3,7 @@ import 'package:ecommerce_application/pages/wishlist_page.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
+import 'package:ecommerce_application/pages/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
@@ -87,7 +88,7 @@ class _UserPageState extends State<UserPage> {
                         width: 12,
                       ),
                       Text(
-                        'Guest',
+                        'Invitado',
                         style: TextStyle(fontSize: 20.0, color: Colors.white),
                       ),
                     ],
@@ -218,7 +219,9 @@ class _UserPageState extends State<UserPage> {
                                         // textStyle:
                                         // TextStyle(fontSize: 20),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, "/");
+                                      },
                                       child: Text('Aceptar'),
                                     ),
                                   ],
@@ -229,7 +232,7 @@ class _UserPageState extends State<UserPage> {
                         });
                   },
                   title: Text('Cerrar sesión'),
-                  leading: Icon(Icons.exit_to_app_rounded),
+                  leading: Icon(LineIcons.alternateSignOut),
                 ),
               ),
             ),
@@ -301,7 +304,8 @@ class _UserPageState extends State<UserPage> {
             child: ListTile(
               onTap: () {},
               title: Text(title),
-              subtitle: Text(subTitle),
+              subtitle: Text(subTitle,
+                  style: TextStyle(color: Theme.of(context).accentColor)),
               leading: Icon(_userTileIcons[indexItem]),
             )));
   }

@@ -131,7 +131,8 @@ class CardPopularProduct extends StatelessWidget {
                                                 size: 30,
                                                 color: productInCart
                                                     ? Colors.amber
-                                                    : Colors.black87),
+                                                    : Theme.of(context)
+                                                        .hintColor),
                                           ))),
                                 )
                               ])

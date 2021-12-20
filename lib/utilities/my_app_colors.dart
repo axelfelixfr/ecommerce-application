@@ -14,8 +14,8 @@ class MyAppColors {
   static Color cartColor = Color(0xFFFFAB00);
   static Color cartBadgeColor = Color(0xFFFB8C00);
 
-  static Color gradiendFStart = Color(0xFFE040FB);
-  static Color gradiendFEnd = Color(0xFFE1BEE7);
+  static Color gradiendFStart = Color(0xFFFFAB00);
+  static Color gradiendFEnd = Color(0xFFFB8C00);
   static Color endColor = Color.fromARGB(255, 255, 186, 8);
   static Color purple300 = Color(0xFFBA68C8);
   static Color gradiendYEnd = Color(0xFFFFA000);
