@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/cart_page.dart';
 import 'package:ecommerce_application/pages/wishlist_page.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
-import 'package:ecommerce_application/pages/landing_page.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +20,15 @@ class _UserPageState extends State<UserPage> {
   // bool _value = false;
   ScrollController _scrollController;
   var top = 0.0;
+  // Firebase - información del usuario
+  String _uid;
+  String _name;
+  String _email;
+  int _phoneNumber;
+  String _joinedAt;
+  String _userImageUrl;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   @override
   void initState() {
     super.initState();
@@ -30,6 +36,30 @@ class _UserPageState extends State<UserPage> {
     _scrollController.addListener(() {
       setState(() {});
     });
+    // Se inicializa trayendo la información del usuario
+    getDataUser();
+  }
+
+  // Método para obtener información del usuario
+  void getDataUser() async {
+    User user = _auth.currentUser;
+    _uid = user.uid;
+    // print('El nombre es: ${user.displayName}');
+    // print('Su foto es: ${user.photoURL}');
+    // Se manda a traer el documento del usuario con su información a través de su id
+    final DocumentSnapshot userDoc = user.isAnonymous
+        ? null
+        : await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+
+    if (userDoc != null) {
+      setState(() {
+        _name = userDoc.get('name');
+        _email = user.email;
+        _phoneNumber = userDoc.get('phoneNumber');
+        _joinedAt = userDoc.get('joinedAt');
+        _userImageUrl = userDoc.get('imageUrl');
+      });
+    }
   }
 
   @override
@@ -83,8 +113,8 @@ class _UserPageState extends State<UserPage> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: NetworkImage(
-                                'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
+                            image: NetworkImage(_userImageUrl ??
+                                'https://s2.qwant.com/thumbr/0x380/e/2/1dcae51df64ecca2a6a8eafd5fd420fcc23d09d4473b89678965fafa2bbfe1/user-icon-vector.jpg?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F000%2F551%2F599%2Foriginal%2Fuser-icon-vector.jpg&q=0&b=1&p=0&a=0'),
                           ),
                         ),
                       ),
@@ -92,116 +122,122 @@ class _UserPageState extends State<UserPage> {
                         width: 12,
                       ),
                       Text(
-                        'Invitado',
+                        _name == null ? 'Invitado' : _name,
                         style: TextStyle(fontSize: 20.0, color: Colors.white),
                       ),
                     ],
                   ),
                 ),
                 background: Image(
-                  image: NetworkImage(
-                      'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
+                  image: NetworkImage(_userImageUrl ??
+                      'https://s2.qwant.com/thumbr/0x380/e/2/1dcae51df64ecca2a6a8eafd5fd420fcc23d09d4473b89678965fafa2bbfe1/user-icon-vector.jpg?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F000%2F551%2F599%2Foriginal%2Fuser-icon-vector.jpg&q=0&b=1&p=0&a=0'),
                   fit: BoxFit.fill,
                 ),
               ),
             );
           }),
         ),
-        SliverToBoxAdapter(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: userTitle('Información del usuario')),
-            Divider(thickness: 1, color: Colors.grey),
-            Material(
-                color: Colors.transparent,
-                child: InkWell(
-                    splashColor: Theme.of(context).splashColor,
-                    child: ListTile(
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(WishlistPage.routeName),
-                      title: Text('Mi lista'),
-                      trailing: Icon(LineIcons.angleRight),
-                      leading: Icon(MyAppIcons.wishlist),
-                    ))),
-            Material(
-                color: Colors.transparent,
-                child: InkWell(
-                    splashColor: Theme.of(context).splashColor,
-                    child: ListTile(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(CartPage.routeName),
-                      title: Text('Mi carrito'),
-                      trailing: Icon(LineIcons.angleRight),
-                      leading: Icon(MyAppIcons.shopping),
-                    ))),
-            Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: userTitle('Información del usuario')),
-            Divider(thickness: 1, color: Colors.grey),
-            userListTile('Correo electrónico', 'Correo sub', 0, context),
-            userListTile('Número de teléfono', 'Teléfono sub', 1, context),
-            userListTile('Dirección de envío', 'subtitlo bonito', 2, context),
-            userListTile('Fecha de unión', 'subtitlo bonito', 3, context),
-            // userListTile('', 'subtitlo bonito', 0, context),
-            Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: userTitle('Configuración de usuario')),
-            Divider(thickness: 1, color: Colors.grey),
-            ListTileSwitch(
-              value: themeChange.darkTheme,
-              switchActiveColor: Colors.amber,
-              leading: themeChange.darkTheme
-                  ? Icon(LineIcons.sun)
-                  : Icon(LineIcons.moon),
-              onChanged: (value) {
-                setState(() {
-                  themeChange.darkTheme = value;
-                });
-              },
-              visualDensity: VisualDensity.comfortable,
-              switchType: SwitchType.cupertino,
-              title: Text('Modo Oscuro'),
-            ),
-            Material(
-              color: Colors.transparent,
-              child: InkWell(
-                splashColor: Theme.of(context).splashColor,
-                child: ListTile(
-                  onTap: () async {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AssetGiffyDialog(
-                              image: Image.asset('assets/img/homero.gif',
-                                  fit: BoxFit.fill),
-                              buttonOkColor: Colors.amber,
-                              buttonOkText: Text('Sí',
-                                  style: TextStyle(color: Colors.white)),
-                              buttonCancelText: Text('Cancelar',
-                                  style: TextStyle(color: Colors.white)),
-                              title: Text(
-                                '¡Antes de que te vayas!',
-                                style: TextStyle(
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              description: Text(
-                                '¿Estás seguro de querer continuar con salir de la aplicación?',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(),
-                              ),
-                              entryAnimation: EntryAnimation.TOP,
-                              onOkButtonPressed: () async {
-                                await _auth
-                                    .signOut()
-                                    .then((value) => Navigator.pop(context));
-                              },
-                            ));
-                    // Navigator.canPop(context)? Navigator.pop(context):null;
-                    /*
+        !_auth.currentUser.isAnonymous
+            ? SliverToBoxAdapter(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: userTitle('Información del usuario')),
+                  Divider(thickness: 1, color: Colors.grey),
+                  Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          splashColor: Theme.of(context).splashColor,
+                          child: ListTile(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(WishlistPage.routeName),
+                            title: Text('Mi lista'),
+                            trailing: Icon(LineIcons.angleRight),
+                            leading: Icon(MyAppIcons.wishlist),
+                          ))),
+                  Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          splashColor: Theme.of(context).splashColor,
+                          child: ListTile(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(CartPage.routeName),
+                            title: Text('Mi carrito'),
+                            trailing: Icon(LineIcons.angleRight),
+                            leading: Icon(MyAppIcons.shopping),
+                          ))),
+                  Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: userTitle('Información del usuario')),
+                  Divider(thickness: 1, color: Colors.grey),
+                  userListTile('Correo electrónico', _email ?? '', 0, context),
+                  userListTile(
+                      'Número de teléfono',
+                      _phoneNumber == null
+                          ? 'No ha registrado número de teléfono'
+                          : _phoneNumber.toString(),
+                      1,
+                      context),
+                  userListTile('Dirección de envío', '', 2, context),
+                  userListTile('Fecha de unión', _joinedAt ?? '', 3, context),
+                  // userListTile('', 'subtitlo bonito', 0, context),
+                  Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: userTitle('Configuración de la app')),
+                  Divider(thickness: 1, color: Colors.grey),
+                  ListTileSwitch(
+                    value: themeChange.darkTheme,
+                    switchActiveColor: Colors.amber,
+                    leading: themeChange.darkTheme
+                        ? Icon(LineIcons.sun)
+                        : Icon(LineIcons.moon),
+                    onChanged: (value) {
+                      setState(() {
+                        themeChange.darkTheme = value;
+                      });
+                    },
+                    visualDensity: VisualDensity.comfortable,
+                    switchType: SwitchType.cupertino,
+                    title: Text('Modo Oscuro'),
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      splashColor: Theme.of(context).splashColor,
+                      child: ListTile(
+                        onTap: () async {
+                          showDialog(
+                              context: context,
+                              builder: (_) => AssetGiffyDialog(
+                                    image: Image.asset('assets/img/homero.gif',
+                                        fit: BoxFit.fill),
+                                    buttonOkColor: Colors.amber,
+                                    buttonOkText: Text('Sí',
+                                        style: TextStyle(color: Colors.white)),
+                                    buttonCancelText: Text('Cancelar',
+                                        style: TextStyle(color: Colors.white)),
+                                    title: Text(
+                                      '¡Antes de que te vayas!',
+                                      style: TextStyle(
+                                          fontSize: 22.0,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    description: Text(
+                                      '¿Estás seguro de querer continuar con salir de la aplicación?',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(),
+                                    ),
+                                    entryAnimation: EntryAnimation.TOP,
+                                    onOkButtonPressed: () async {
+                                      await _auth.signOut().then(
+                                          (value) => Navigator.pop(context));
+                                    },
+                                  ));
+                          // Navigator.canPop(context)? Navigator.pop(context):null;
+                          /*
                     showDialog(
                         context: context,
                         builder: (BuildContext ctx) {
@@ -265,16 +301,81 @@ class _UserPageState extends State<UserPage> {
                           );
                         });
                         */
-                  },
-                  title: Text('Cerrar sesión'),
-                  leading: Icon(LineIcons.alternateSignOut),
-                ),
-              ),
-            ),
-          ],
-        ))
+                        },
+                        title: Text('Cerrar sesión'),
+                        leading: Icon(LineIcons.alternateSignOut),
+                      ),
+                    ),
+                  ),
+                ],
+              ))
+            : SliverToBoxAdapter(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: userTitle('Configuración de la app')),
+                  Divider(thickness: 1, color: Colors.grey),
+                  ListTileSwitch(
+                    value: themeChange.darkTheme,
+                    switchActiveColor: Colors.amber,
+                    leading: themeChange.darkTheme
+                        ? Icon(LineIcons.sun)
+                        : Icon(LineIcons.moon),
+                    onChanged: (value) {
+                      setState(() {
+                        themeChange.darkTheme = value;
+                      });
+                    },
+                    visualDensity: VisualDensity.comfortable,
+                    switchType: SwitchType.cupertino,
+                    title: Text('Modo Oscuro'),
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      splashColor: Theme.of(context).splashColor,
+                      child: ListTile(
+                        onTap: () async {
+                          showDialog(
+                              context: context,
+                              builder: (_) => AssetGiffyDialog(
+                                    image: Image.asset('assets/img/homero.gif',
+                                        fit: BoxFit.fill),
+                                    buttonOkColor: Colors.amber,
+                                    buttonOkText: Text('Sí',
+                                        style: TextStyle(color: Colors.white)),
+                                    buttonCancelText: Text('Cancelar',
+                                        style: TextStyle(color: Colors.white)),
+                                    title: Text(
+                                      '¡Antes de que te vayas!',
+                                      style: TextStyle(
+                                          fontSize: 22.0,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    description: Text(
+                                      '¿Estás seguro de querer continuar con salir de la aplicación?',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(),
+                                    ),
+                                    entryAnimation: EntryAnimation.TOP,
+                                    onOkButtonPressed: () async {
+                                      await _auth.signOut().then(
+                                          (value) => Navigator.pop(context));
+                                    },
+                                  ));
+                        },
+                        title: Text('Cerrar sesión'),
+                        leading: Icon(LineIcons.alternateSignOut),
+                      ),
+                    ),
+                  ),
+                ],
+              ))
       ]),
-      _buildFab()
+      !_auth.currentUser.isAnonymous ? _buildFab() : Container()
     ]));
   }
 

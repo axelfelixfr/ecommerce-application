@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:ecommerce_application/pages/login_page.dart';
 import 'package:ecommerce_application/pages/sign_up_page.dart';
@@ -46,6 +47,7 @@ class _LandingPageState extends State<LandingPage>
   ];
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -76,14 +78,32 @@ class _LandingPageState extends State<LandingPage>
   Future<void> _googleSignIn() async {
     final googleSignIn = GoogleSignIn();
     final googleAccount = await googleSignIn.signIn();
+
     if (googleAccount != null) {
       final googleAuth = await googleAccount.authentication;
       if (googleAuth.accessToken != null && googleAuth.idToken != null) {
         try {
+          var date = DateTime.now().toString();
+          var parseDate = DateTime.parse(date);
+          var formattedDate =
+              "${parseDate.day}-${parseDate.month}-${parseDate.year}";
+
           final authResult = await _auth.signInWithCredential(
               GoogleAuthProvider.credential(
                   idToken: googleAuth.idToken,
                   accessToken: googleAuth.accessToken));
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(authResult.user.uid)
+              .set({
+            'id': authResult.user.uid,
+            'name': authResult.user.displayName,
+            'email': authResult.user.email,
+            'phoneNumber': authResult.user.phoneNumber,
+            'imageUrl': authResult.user.photoURL,
+            'joinedAt': formattedDate,
+            'createdAt': Timestamp.now()
+          });
         } catch (error) {
           // Si ocurrio un error se muestra la alerta
           CoolAlert.show(
@@ -96,6 +116,28 @@ class _LandingPageState extends State<LandingPage>
               backgroundColor: Theme.of(context).backgroundColor);
         }
       }
+    }
+  }
+
+  void _loginAnonymously() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      await _auth.signInAnonymously();
+    } catch (error) {
+      // Si ocurrio un error se muestra la alerta
+      CoolAlert.show(
+          context: context,
+          title: '¡Error!',
+          type: CoolAlertType.error,
+          confirmBtnColor: Colors.amber,
+          text: error.message,
+          animType: CoolAlertAnimType.slideInUp,
+          backgroundColor: Theme.of(context).backgroundColor);
+      // print('Ocurrio un error: ${error.message}');
+    } finally {
+      _isLoading = false;
     }
   }
 
@@ -228,16 +270,16 @@ class _LandingPageState extends State<LandingPage>
           onPressed: _googleSignIn,
         ),
         SizedBox(height: 10),
-        SignInButtonBuilder(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
-          innerPadding: EdgeInsets.symmetric(horizontal: 5.0),
-          text: 'Continuar como invitado',
-          icon: LineIcons.user,
-          onPressed: () {
-            Navigator.pushNamed(context, MyBottomNavigation.routeName);
-          },
-          backgroundColor: Colors.blueGrey[700],
-        ),
+        _isLoading
+            ? CircularProgressIndicator()
+            : SignInButtonBuilder(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                innerPadding: EdgeInsets.symmetric(horizontal: 5.0),
+                text: 'Continuar como invitado',
+                icon: LineIcons.user,
+                onPressed: _loginAnonymously,
+                backgroundColor: Colors.blueGrey[700],
+              ),
         SizedBox(height: 40),
       ])
     ]));

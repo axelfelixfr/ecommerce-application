@@ -76,6 +76,8 @@ class _SignUpPageState extends State<SignUpPage> {
               email: _emailAddress.trim(), password: _password.trim());
           final User user = _auth.currentUser;
           final _uid = user.uid;
+          await user.updateProfile(displayName: _fullName, photoURL: _url);
+          await user.reload();
           await FirebaseFirestore.instance.collection('users').doc(_uid).set({
             'id': _uid,
             'name': _fullName,
