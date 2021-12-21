@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:ecommerce_application/pages/login_page.dart';
 import 'package:ecommerce_application/pages/sign_up_page.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/widgets/bottom_navigation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:social_auth_buttons/social_auth_buttons.dart';
 
 class LandingPage extends StatefulWidget {
   @override
@@ -28,13 +30,13 @@ class _LandingPageState extends State<LandingPage>
     'https://cdn.pixabay.com/photo/2018/09/30/20/46/stand-3714597_960_720.jpg',
     'https://cdn.pixabay.com/photo/2021/02/21/07/42/food-6035549_960_720.jpg',
     'https://cdn.pixabay.com/photo/2017/09/16/21/44/food-2756948_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2016/01/21/23/43/market-1154999_960_720.jpg',
+    // 'https://cdn.pixabay.com/photo/2016/01/21/23/43/market-1154999_960_720.jpg',
     'https://cdn.pixabay.com/photo/2016/03/27/21/59/bread-1284438_960_720.jpg',
     'https://cdn.pixabay.com/photo/2014/02/03/11/43/fruits-257343_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2015/09/27/06/18/market-960361_960_720.jpg',
+    // 'https://cdn.pixabay.com/photo/2015/09/27/06/18/market-960361_960_720.jpg',
     'https://cdn.pixabay.com/photo/2017/09/09/16/38/vegetables-2732589_960_720.jpg',
     'https://cdn.pixabay.com/photo/2017/01/28/17/19/viet-nam-2015934_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2017/10/01/20/17/music-2806852_960_720.jpg',
+    // 'https://cdn.pixabay.com/photo/2017/10/01/20/17/music-2806852_960_720.jpg',
     'https://cdn.pixabay.com/photo/2021/02/07/20/35/vegetables-5992673_960_720.jpg',
     'https://cdn.pixabay.com/photo/2018/02/04/19/42/ham-3130701_960_720.jpg',
     'https://cdn.pixabay.com/photo/2015/06/25/22/06/the-market-place-821843_960_720.jpg',
@@ -42,6 +44,8 @@ class _LandingPageState extends State<LandingPage>
     'https://cdn.pixabay.com/photo/2015/01/16/15/01/market-601573_960_720.jpg',
     'https://cdn.pixabay.com/photo/2016/11/29/10/09/bakery-1868925_960_720.jpg',
   ];
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -67,6 +71,32 @@ class _LandingPageState extends State<LandingPage>
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  Future<void> _googleSignIn() async {
+    final googleSignIn = GoogleSignIn();
+    final googleAccount = await googleSignIn.signIn();
+    if (googleAccount != null) {
+      final googleAuth = await googleAccount.authentication;
+      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+        try {
+          final authResult = await _auth.signInWithCredential(
+              GoogleAuthProvider.credential(
+                  idToken: googleAuth.idToken,
+                  accessToken: googleAuth.accessToken));
+        } catch (error) {
+          // Si ocurrio un error se muestra la alerta
+          CoolAlert.show(
+              context: context,
+              title: '¡Error!',
+              type: CoolAlertType.error,
+              confirmBtnColor: Colors.amber,
+              text: error.message,
+              animType: CoolAlertAnimType.slideInUp,
+              backgroundColor: Theme.of(context).backgroundColor);
+        }
+      }
+    }
   }
 
   @override
@@ -195,7 +225,7 @@ class _LandingPageState extends State<LandingPage>
           Buttons.Google,
           padding: EdgeInsets.symmetric(horizontal: 30.0),
           text: 'Continuar con Google',
-          onPressed: () {},
+          onPressed: _googleSignIn,
         ),
         SizedBox(height: 10),
         SignInButtonBuilder(

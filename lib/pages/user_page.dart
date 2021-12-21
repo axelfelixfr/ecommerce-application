@@ -4,6 +4,8 @@ import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:ecommerce_application/pages/landing_page.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
@@ -18,6 +20,8 @@ class _UserPageState extends State<UserPage> {
   // bool _value = false;
   ScrollController _scrollController;
   var top = 0.0;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -168,7 +172,36 @@ class _UserPageState extends State<UserPage> {
                 splashColor: Theme.of(context).splashColor,
                 child: ListTile(
                   onTap: () async {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AssetGiffyDialog(
+                              image: Image.asset('assets/img/homero.gif',
+                                  fit: BoxFit.fill),
+                              buttonOkColor: Colors.amber,
+                              buttonOkText: Text('Sí',
+                                  style: TextStyle(color: Colors.white)),
+                              buttonCancelText: Text('Cancelar',
+                                  style: TextStyle(color: Colors.white)),
+                              title: Text(
+                                '¡Antes de que te vayas!',
+                                style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              description: Text(
+                                '¿Estás seguro de querer continuar con salir de la aplicación?',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(),
+                              ),
+                              entryAnimation: EntryAnimation.TOP,
+                              onOkButtonPressed: () async {
+                                await _auth
+                                    .signOut()
+                                    .then((value) => Navigator.pop(context));
+                              },
+                            ));
                     // Navigator.canPop(context)? Navigator.pop(context):null;
+                    /*
                     showDialog(
                         context: context,
                         builder: (BuildContext ctx) {
@@ -220,7 +253,8 @@ class _UserPageState extends State<UserPage> {
                                         // TextStyle(fontSize: 20),
                                       ),
                                       onPressed: () {
-                                        Navigator.pushNamed(context, "/");
+                                        // Navigator.pushNamed(context, "/");
+                                        _auth.signOut();
                                       },
                                       child: Text('Aceptar'),
                                     ),
@@ -230,6 +264,7 @@ class _UserPageState extends State<UserPage> {
                             ],
                           );
                         });
+                        */
                   },
                   title: Text('Cerrar sesión'),
                   leading: Icon(LineIcons.alternateSignOut),
@@ -288,7 +323,7 @@ class _UserPageState extends State<UserPage> {
   // Lista de iconos que tendra la lista de opciones
   final List<IconData> _userTileIcons = [
     LineIcons.envelopeAlt,
-    LineIcons.tty,
+    LineIcons.mobilePhone,
     LineIcons.shippingFast,
     Icons.watch_later,
     LineIcons.alternateSignOut

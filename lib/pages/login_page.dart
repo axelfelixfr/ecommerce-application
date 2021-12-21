@@ -1,7 +1,10 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -18,6 +21,9 @@ class _LoginPageState extends State<LoginPage> {
   String _password = '';
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final RoundedLoadingButtonController _btnLoginController =
+      new RoundedLoadingButtonController();
 
   @override
   void dispose() {
@@ -25,11 +31,38 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
+      _btnLoginController.start();
       _formKey.currentState.save();
+      try {
+        await _auth
+            .signInWithEmailAndPassword(
+                email: _emailAddress.trim(), password: _password.trim())
+            .then((value) {
+          print('Si paso $value');
+          _btnLoginController.success();
+          // Navigator.pop(context);
+          Navigator.canPop(context) ? Navigator.pop(context) : null;
+        });
+      } catch (error) {
+        // Si ocurrio un error se muestra la alerta
+        CoolAlert.show(
+            context: context,
+            title: '¡Error!',
+            type: CoolAlertType.error,
+            confirmBtnColor: Colors.amber,
+            text: error.message,
+            animType: CoolAlertAnimType.slideInUp,
+            backgroundColor: Theme.of(context).backgroundColor);
+        // print('Ocurrio un error: ${error.message}');
+      } finally {
+        _btnLoginController.stop();
+      }
+    } else {
+      _btnLoginController.stop();
     }
   }
 
@@ -60,117 +93,132 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           )),
-      Column(
-        children: [
-          Container(
-              margin: EdgeInsets.only(top: 80),
-              height: 90.0,
-              // width: 120.0,
-              // decoration: BoxDecoration(
-              //     color: Colors.white,
-              //     borderRadius: BorderRadius.circular(20),
-              //     image: DecorationImage(
-              //         image: AssetImage('assets/img/MercadoADistancia.png'),
-              //         fit: BoxFit.fill),
-              //     shape: BoxShape.rectangle)
-              child: Image.asset('assets/img/MercadoADistanciaYellow.png')),
-          SizedBox(height: 30),
-          Form(
-              key: _formKey,
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: TextFormField(
-                    style: TextStyle(color: Colors.black),
-                    key: ValueKey('email'),
-                    validator: (value) {
-                      if (value.isEmpty || !value.contains('@')) {
-                        return 'Por favor ingresa un email válido';
-                      }
-                      return null;
-                    },
-                    textInputAction: TextInputAction.next,
-                    onEditingComplete: () =>
-                        FocusScope.of(context).requestFocus(_passwordFocusNode),
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                        labelStyle: TextStyle(color: Colors.black87),
-                        border: const UnderlineInputBorder(),
-                        filled: true,
-                        prefixIcon: Icon(LineIcons.at, color: Colors.grey),
-                        labelText: 'Correo electrónico',
-                        fillColor: Colors.white),
-                    onSaved: (value) {
-                      _emailAddress = value;
-                    },
+      SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                margin: EdgeInsets.only(top: 80),
+                height: 90.0,
+                // width: 120.0,
+                // decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     borderRadius: BorderRadius.circular(20),
+                //     image: DecorationImage(
+                //         image: AssetImage('assets/img/MercadoADistancia.png'),
+                //         fit: BoxFit.fill),
+                //     shape: BoxShape.rectangle)
+                child: Image.asset('assets/img/MercadoADistanciaYellow.png')),
+            SizedBox(height: 30),
+            Form(
+                key: _formKey,
+                child: Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.black),
+                      key: ValueKey('email'),
+                      validator: (value) {
+                        if (value.isEmpty || !value.contains('@')) {
+                          return 'Por favor ingresa un email válido';
+                        }
+                        return null;
+                      },
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: () => FocusScope.of(context)
+                          .requestFocus(_passwordFocusNode),
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                          labelStyle: TextStyle(color: Colors.black87),
+                          border: const UnderlineInputBorder(),
+                          filled: true,
+                          prefixIcon: Icon(LineIcons.at, color: Colors.grey),
+                          labelText: 'Correo electrónico',
+                          fillColor: Colors.white),
+                      onSaved: (value) {
+                        _emailAddress = value;
+                      },
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: TextFormField(
-                    style: TextStyle(color: Colors.black),
-                    key: ValueKey('password'),
-                    validator: (value) {
-                      if (value.isEmpty || value.length < 7) {
-                        return 'Por favor ingresa un password válido';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.visiblePassword,
-                    focusNode: _passwordFocusNode,
-                    decoration: InputDecoration(
-                        labelStyle: TextStyle(color: Colors.black87),
-                        border: const UnderlineInputBorder(),
-                        filled: true,
-                        prefixIcon: Icon(LineIcons.lock, color: Colors.grey),
-                        suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                            child: Icon(
-                                _obscureText
-                                    ? LineIcons.eye
-                                    : LineIcons.lowVision,
-                                color: Colors.grey)),
-                        labelText: 'Contraseña',
-                        fillColor: Colors.white),
-                    onSaved: (value) {
-                      _password = value;
-                    },
-                    obscureText: _obscureText,
-                    onEditingComplete: _submitForm,
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.black),
+                      key: ValueKey('password'),
+                      validator: (value) {
+                        if (value.isEmpty || value.length < 7) {
+                          return 'Por favor ingresa un password válido';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.visiblePassword,
+                      focusNode: _passwordFocusNode,
+                      decoration: InputDecoration(
+                          labelStyle: TextStyle(color: Colors.black87),
+                          border: const UnderlineInputBorder(),
+                          filled: true,
+                          prefixIcon: Icon(LineIcons.lock, color: Colors.grey),
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                              child: Icon(
+                                  _obscureText
+                                      ? LineIcons.eye
+                                      : LineIcons.lowVision,
+                                  color: Colors.grey)),
+                          labelText: 'Contraseña',
+                          fillColor: Colors.white),
+                      onSaved: (value) {
+                        _password = value;
+                      },
+                      obscureText: _obscureText,
+                      onEditingComplete: _submitForm,
+                    ),
                   ),
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.amber),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(7),
-                                      side: BorderSide(
-                                          color:
-                                              MyAppColors.backgroundColor)))),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    SizedBox(width: 10),
+                    // ElevatedButton(
+                    //     style: ButtonStyle(
+                    //         backgroundColor:
+                    //             MaterialStateProperty.all(Colors.amber),
+                    //         shape: MaterialStateProperty.all<
+                    //                 RoundedRectangleBorder>(
+                    //             RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(7),
+                    //                 side: BorderSide(
+                    //                     color: MyAppColors.backgroundColor)))),
+                    //     onPressed: _submitForm,
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Icon(LineIcons.doorOpen),
+                    //         SizedBox(width: 5),
+                    //         Text('Entrar',
+                    //             style: TextStyle(
+                    //                 fontWeight: FontWeight.w500, fontSize: 17)),
+                    //       ],
+                    //     )),
+                    RoundedLoadingButton(
+                      borderRadius: 7,
+                      height: 35,
+                      width: 150,
+                      curve: Curves.easeInCubic,
+                      color: Colors.amber,
+                      child: Text('Entrar',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 17)),
+                      controller: _btnLoginController,
                       onPressed: _submitForm,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(LineIcons.doorOpen),
-                          SizedBox(width: 5),
-                          Text('Entrar',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 17)),
-                        ],
-                      )),
-                  // SizedBox(width: 10)
-                ]),
-              ]))
-        ],
+                    )
+                    // SizedBox(width: 10)
+                  ]),
+                ]))
+          ],
+        ),
       )
     ]));
   }

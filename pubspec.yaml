@@ -41,24 +41,42 @@ dependencies:
   badges: ^1.2.0
   # Widget Backdrop
   backdrop: ^0.5.3
-  # Widget carousel
+  # Widget Carousel
   carousel_pro: ^1.0.0
   # Widget Swiper
   flutter_swiper: ^1.1.6
-  # Navigation Bar
+  # Barra de Navegación
   animated_bottom_navigation_bar: ^0.2.1
+  # Cambiar tamaño de texto
   auto_size_text: ^2.1.0
+  # Animación
   circular_reveal_animation: ^1.1.5
+  # Traer imagenes por internet
   cached_network_image: ^2.5.1
-  # Button social media
-  social_auth_buttons: ^1.1.2
   # Google Fonts
   google_fonts: ^1.1.2
   # Efecto wave
   wave: ^0.1.0
-  # Image picker for sign up
+  # Image picker para el registro
   image_picker: ^0.6.7+22
+  # Buttons sign in
   flutter_signin_button: ^1.1.0
+  # Inicialización de Firebase
+  firebase_core: ^0.7.0
+  # Firebase auth
+  firebase_auth: ^0.20.1
+  # Alerta
+  cool_alert: ^1.0.3
+  # Button con loading
+  rounded_loading_button: ^1.0.18
+  # Alerta con gif
+  giffy_dialog: ^1.8.0
+  # Google sign in
+  google_sign_in: ^4.5.9
+  # Database Firestore
+  cloud_firestore: ^0.16.0+1
+  # Firebase storage
+  firebase_storage: ^7.0.0
 
 dev_dependencies:
   flutter_test:
