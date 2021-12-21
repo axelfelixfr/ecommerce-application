@@ -7,7 +7,7 @@ class Product with ChangeNotifier {
   final double price;
   final String imageUrl;
   final String productCategoryName;
-  final String brand;
+  final String distributor;
   final int quantity;
   final bool isFavorite;
   final bool isPopular;
@@ -19,7 +19,7 @@ class Product with ChangeNotifier {
       this.price,
       this.imageUrl,
       this.productCategoryName,
-      this.brand,
+      this.distributor,
       this.quantity,
       this.isFavorite,
       this.isPopular});

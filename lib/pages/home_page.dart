@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
+    productsProvider.fetchProducts();
     final listPopularProducts = productsProvider.popularProducts;
 
     return Scaffold(

@@ -137,7 +137,9 @@ class _LandingPageState extends State<LandingPage>
           backgroundColor: Theme.of(context).backgroundColor);
       // print('Ocurrio un error: ${error.message}');
     } finally {
-      _isLoading = false;
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 

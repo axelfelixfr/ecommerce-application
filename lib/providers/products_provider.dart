@@ -1,7 +1,64 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/models/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductsProvider with ChangeNotifier {
+  List<Product> _products = [];
+  List<Product> get products {
+    return [..._products];
+  }
+
+  Future<void> fetchProducts() async {
+    await FirebaseFirestore.instance
+        .collection('products')
+        .get()
+        .then((QuerySnapshot productsSnapshot) {
+      _products = [];
+      productsSnapshot.docs.forEach((productItem) {
+        _products.insert(
+            0,
+            Product(
+                id: productItem.get('productId'),
+                name: productItem.get('productName'),
+                description: productItem.get('description'),
+                price: double.parse(productItem.get('price')),
+                imageUrl: productItem.get('image'),
+                distributor: productItem.get('distributor'),
+                productCategoryName: productItem.get('category'),
+                quantity: int.parse(productItem.get('quantity')),
+                isPopular: true));
+      });
+    });
+  }
+
+  List<Product> get popularProducts {
+    return _products.where((element) => element.isPopular).toList();
+  }
+
+  Product findByID(String productId) {
+    return _products.firstWhere((element) => element.id == productId);
+  }
+
+  List<Product> findByCategory(String categoryName) {
+    List _categoryList = _products
+        .where((element) => element.productCategoryName
+            .toLowerCase()
+            .contains(categoryName.toLowerCase()))
+        .toList();
+
+    return _categoryList;
+  }
+
+  List<Product> searchQuery(String searchText) {
+    List _productsList = _products
+        .where((element) =>
+            element.name.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+
+    return _productsList;
+  }
+
+  /*
   List<Product> _products = [
     Product(
         id: 'Longaniza',
@@ -465,35 +522,5 @@ class ProductsProvider with ChangeNotifier {
         quantity: 951,
         isPopular: false)
   ];
-
-  List<Product> get products {
-    return [..._products];
-  }
-
-  List<Product> get popularProducts {
-    return _products.where((element) => element.isPopular).toList();
-  }
-
-  Product findByID(String productId) {
-    return _products.firstWhere((element) => element.id == productId);
-  }
-
-  List<Product> findByCategory(String categoryName) {
-    List _categoryList = _products
-        .where((element) => element.productCategoryName
-            .toLowerCase()
-            .contains(categoryName.toLowerCase()))
-        .toList();
-
-    return _categoryList;
-  }
-
-  List<Product> searchQuery(String searchText) {
-    List _productsList = _products
-        .where((element) =>
-            element.name.toLowerCase().contains(searchText.toLowerCase()))
-        .toList();
-
-    return _productsList;
-  }
+  */
 }

@@ -77,6 +77,8 @@ dependencies:
   cloud_firestore: ^0.16.0+1
   # Firebase storage
   firebase_storage: ^7.0.0
+  # Generador de uuid
+  uuid: ^2.2.2
 
 dev_dependencies:
   flutter_test:

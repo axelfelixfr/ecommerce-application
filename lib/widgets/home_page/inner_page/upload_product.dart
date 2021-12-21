@@ -1,10 +1,15 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:uuid/uuid.dart';
 
 class UploadProduct extends StatefulWidget {
   static const routeName = '/UploadProduct';
@@ -16,7 +21,7 @@ class UploadProduct extends StatefulWidget {
 class _UploadProductState extends State<UploadProduct> {
   final _formKey = GlobalKey<FormState>();
 
-  var _productTitle = '';
+  var _productName = '';
   var _productPrice = '';
   var _productCategory = '';
   var _productDistributor = '';
@@ -27,6 +32,10 @@ class _UploadProductState extends State<UploadProduct> {
   String _categoryValue;
   String _distributorValue;
   File _pickedImage;
+  bool _isLoading = false;
+  String _url;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  var uuid = Uuid();
 
   showAlertDialog(BuildContext context, String title, String body) {
     // Se muestra el modal/dialogo
@@ -52,15 +61,81 @@ class _UploadProductState extends State<UploadProduct> {
   void _trySubmit() async {
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
-
+    print('Si paso');
     if (isValid) {
       _formKey.currentState.save();
-      print(_productTitle);
+      print(_productName);
       print(_productPrice);
       print(_productCategory);
       print(_productDistributor);
       print(_productDescription);
       print(_productQuantity);
+    }
+
+    if (isValid) {
+      _formKey.currentState.save();
+      try {
+        if (_pickedImage == null) {
+          CoolAlert.show(
+              context: context,
+              title: '¡No hay imagen!',
+              type: CoolAlertType.error,
+              confirmBtnColor: Colors.amber,
+              text: 'Por favor debes ingresar una imagen para el producto',
+              animType: CoolAlertAnimType.slideInUp,
+              backgroundColor: Theme.of(context).backgroundColor);
+        } else {
+          setState(() {
+            _isLoading = true;
+          });
+          final ref = FirebaseStorage.instance
+              .ref()
+              .child('productsImages')
+              .child(_productName + '.jpg');
+          await ref.putFile(_pickedImage);
+
+          _url = await ref.getDownloadURL();
+
+          final User user = _auth.currentUser;
+          final _uidUser = user.uid;
+          final _productId = uuid.v4();
+          await FirebaseFirestore.instance
+              .collection('products')
+              .doc(_productId)
+              .set({
+            'productId': _productId,
+            'productName': _productName,
+            'price': _productPrice,
+            'image': _url,
+            'category': _productCategory,
+            'distributor': _productDistributor,
+            'description': _productDescription,
+            'quantity': _productQuantity,
+            'userId': _uidUser,
+            'createdAt': Timestamp.now()
+          });
+          Navigator.canPop(context) ? Navigator.pop(context) : null;
+        }
+      } catch (error) {
+        // Si ocurrio un error se muestra la alerta
+        CoolAlert.show(
+            context: context,
+            title: '¡Error!',
+            type: CoolAlertType.error,
+            confirmBtnColor: Colors.amber,
+            text: error.message,
+            animType: CoolAlertAnimType.slideInUp,
+            backgroundColor: Theme.of(context).backgroundColor);
+        // print('Ocurrio un error: ${error.message}');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -115,33 +190,35 @@ class _UploadProductState extends State<UploadProduct> {
           child: InkWell(
             onTap: _trySubmit,
             splashColor: Colors.grey,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 2),
-                  child: Text('Subir producto',
-                      style: TextStyle(fontSize: 16),
-                      textAlign: TextAlign.center),
-                ),
-                GradientIcon(
-                  LineIcons.upload,
-                  20,
-                  LinearGradient(
-                    colors: <Color>[
-                      Colors.green,
-                      Colors.yellow,
-                      Colors.deepOrange,
-                      Colors.orange,
-                      Colors.yellow[800]
+            child: _isLoading
+                ? Center(child: CircularProgressIndicator())
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 2),
+                        child: Text('Subir producto',
+                            style: TextStyle(fontSize: 16),
+                            textAlign: TextAlign.center),
+                      ),
+                      GradientIcon(
+                        LineIcons.upload,
+                        20,
+                        LinearGradient(
+                          colors: <Color>[
+                            Colors.green,
+                            Colors.yellow,
+                            Colors.deepOrange,
+                            Colors.orange,
+                            Colors.yellow[800]
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
                     ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
                   ),
-                ),
-              ],
-            ),
           ),
         ),
       ),
@@ -181,7 +258,7 @@ class _UploadProductState extends State<UploadProduct> {
                                         color: Theme.of(context).hintColor),
                                   ),
                                   onSaved: (value) {
-                                    _productTitle = value;
+                                    _productName = value;
                                   },
                                 ),
                               ),
@@ -428,10 +505,6 @@ class _UploadProductState extends State<UploadProduct> {
                             DropdownButton<String>(
                               items: [
                                 DropdownMenuItem<String>(
-                                  child: Text('Coca-cola'),
-                                  value: 'Coca-cola',
-                                ),
-                                DropdownMenuItem<String>(
                                   child: Text('Bachoco'),
                                   value: 'Bachoco',
                                 ),
@@ -458,6 +531,10 @@ class _UploadProductState extends State<UploadProduct> {
                                 DropdownMenuItem<String>(
                                   child: Text('Grupo Herdez'),
                                   value: 'Grupo Herdez',
+                                ),
+                                DropdownMenuItem<String>(
+                                  child: Text('Independiente'),
+                                  value: 'Independiente',
                                 ),
                               ],
                               onChanged: (String value) {

@@ -63,6 +63,12 @@ class _MyBottomNavigationState extends State<MyBottomNavigation>
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     final systemTheme = SystemUiOverlayStyle.light.copyWith(

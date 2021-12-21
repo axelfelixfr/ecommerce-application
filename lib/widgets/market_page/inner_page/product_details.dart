@@ -130,7 +130,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: Divider(
                               thickness: 1, color: Colors.grey, height: 1)),
                       _moreDetails(themeState.darkTheme, 'Marca: ',
-                          informationProduct.brand),
+                          informationProduct.distributor),
                       _moreDetails(themeState.darkTheme, 'Cantidad: ',
                           '${informationProduct.quantity}'),
                       _moreDetails(themeState.darkTheme, 'Categoría: ',
@@ -186,7 +186,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           width: double.infinity,
                           height: 340,
                           child: ListView.builder(
-                              itemCount: 7,
+                              itemCount: listProducts.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (BuildContext context, int index) {
                                 return ChangeNotifierProvider.value(
