@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/cart_page.dart';
 import 'package:ecommerce_application/pages/market_page.dart';
+import 'package:ecommerce_application/pages/wishlist_page.dart';
 import 'package:ecommerce_application/widgets/home_page/inner_page/upload_product.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
@@ -143,7 +144,7 @@ class _BackLayerMenuState extends State<BackLayerMenu> {
                       navigateTo(context, CartPage.routeName);
                     }, "Carrito", 1),
                     contentBackLayer(() {
-                      navigateTo(context, MarketPage.routeName);
+                      navigateTo(context, WishlistPage.routeName);
                     }, "Favoritos", 2),
                     Visibility(
                         child: contentBackLayer(() {

@@ -337,7 +337,7 @@ class _UploadProductState extends State<UploadProduct> {
                                     icon:
                                         Icon(Icons.camera, color: Colors.amber),
                                     label: Text(
-                                      'Camera',
+                                      'Cámara',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         color: Theme.of(context)

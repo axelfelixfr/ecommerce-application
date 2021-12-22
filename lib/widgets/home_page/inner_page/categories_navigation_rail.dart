@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/models/product.dart';
 import 'package:ecommerce_application/providers/products_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'category_rail.dart';
@@ -18,6 +20,35 @@ class _CategoriesNavigationRailState extends State<CategoriesNavigationRail> {
   final padding = 8.0;
   String routeArgs;
   String category;
+  // Firebase
+  String _uid;
+  String _userImageUrl;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    getDataUser();
+  }
+
+  // Método para obtener información del usuario
+  void getDataUser() async {
+    User user = _auth.currentUser;
+    _uid = user.uid;
+
+    // Se manda a traer el documento del usuario con su información a través de su id
+    final DocumentSnapshot userDoc = user.isAnonymous
+        ? null
+        : await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+
+    if (userDoc != null) {
+      setState(() {
+        _userImageUrl = userDoc.get('imageUrl');
+      });
+    }
+  }
+
   @override
   void didChangeDependencies() {
     routeArgs = ModalRoute.of(context).settings.arguments.toString();
@@ -118,7 +149,7 @@ class _CategoriesNavigationRailState extends State<CategoriesNavigationRail> {
                           Center(
                             child: CircleAvatar(
                               radius: 16,
-                              backgroundImage: NetworkImage(
+                              backgroundImage: NetworkImage(_userImageUrl ??
                                   "https://cdn1.vectorstock.com/i/thumb-large/62/60/default-avatar-photo-placeholder-profile-image-vector-21666260.jpg"),
                             ),
                           ),
