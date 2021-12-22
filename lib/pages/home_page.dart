@@ -1,5 +1,6 @@
 import 'package:backdrop/app_bar.dart';
 import 'package:backdrop/backdrop.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/market_page.dart';
 import 'package:ecommerce_application/providers/products_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
@@ -10,7 +11,7 @@ import 'package:ecommerce_application/widgets/home_page/card_popular_product.dar
 import 'package:ecommerce_application/widgets/home_page/list_other_categories.dart';
 import 'package:ecommerce_application/widgets/home_page/list_recipes.dart';
 import 'package:ecommerce_application/widgets/home_page/swiper_categories.dart';
-import 'package:ecommerce_application/utilities/my_app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:line_icons/line_icons.dart';
@@ -21,6 +22,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String _uid;
+  String _userImageUrl;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    getDataUser();
+  }
+
+  // Método para obtener información del usuario
+  void getDataUser() async {
+    User user = _auth.currentUser;
+    _uid = user.uid;
+
+    // Se manda a traer el documento del usuario con su información a través de su id
+    final DocumentSnapshot userDoc = user.isAnonymous
+        ? null
+        : await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+
+    if (userDoc != null) {
+      setState(() {
+        _userImageUrl = userDoc.get('imageUrl');
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final productsProvider =
@@ -59,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                             backgroundColor: Colors.white,
                             child: CircleAvatar(
                                 radius: 13,
-                                backgroundImage: NetworkImage(
+                                backgroundImage: NetworkImage(_userImageUrl ??
                                     'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'))),
                         onPressed: () {}),
                   ],
