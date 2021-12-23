@@ -3,7 +3,7 @@ import 'package:line_icons/line_icons.dart';
 
 class MyAppIcons {
   static IconData home = LineIcons.store;
-  static IconData rss = LineIcons.shoppingBasket;
+  static IconData market = LineIcons.shoppingBasket;
   static IconData search = LineIcons.search;
   static IconData user = LineIcons.user;
   // static IconData user = FluentSystemIcons.ic_fluent_person_regular;

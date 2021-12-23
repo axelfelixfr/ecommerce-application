@@ -1,4 +1,4 @@
-import 'package:ecommerce_application/helpers/global_methods.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:ecommerce_application/widgets/cart_page/cart_checkout.dart';
@@ -13,7 +13,6 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
-    GlobalMethods globalMethods = GlobalMethods();
 
     return cartProvider.getCartItems.isEmpty
         ? Scaffold(body: CartEmpty())
@@ -21,15 +20,25 @@ class CartPage extends StatelessWidget {
             appBar: AppBar(
                 backgroundColor: Theme.of(context).backgroundColor,
                 title: Text(
-                    'Productos en tu carrito (${cartProvider.getCartItems.length})'),
+                    'Productos en tu carrito (${cartProvider.getCartItems.length})',
+                    style: TextStyle(color: Theme.of(context).hintColor)),
                 actions: [
                   IconButton(
                       onPressed: () {
-                        globalMethods.showDialogAlert(
-                            context,
-                            'Limpiar carrito',
-                            '¿Deseas limpiar tu carrito de compras?',
-                            () => cartProvider.clearCart());
+                        CoolAlert.show(
+                            context: context,
+                            title: 'Limpiar carrito',
+                            type: CoolAlertType.confirm,
+                            confirmBtnText: 'Aceptar',
+                            cancelBtnText: 'Cancelar',
+                            confirmBtnColor: Colors.red[400],
+                            onConfirmBtnTap: () {
+                              cartProvider.clearCart();
+                              Navigator.pop(context);
+                            },
+                            text: '¿Deseas limpiar tu carrito de compras?',
+                            animType: CoolAlertAnimType.slideInUp,
+                            backgroundColor: Theme.of(context).backgroundColor);
                       },
                       icon: Icon(MyAppIcons.trash))
                 ]),

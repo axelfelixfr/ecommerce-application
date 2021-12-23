@@ -1,4 +1,4 @@
-import 'package:ecommerce_application/helpers/global_methods.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:ecommerce_application/models/cart.dart';
 import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
@@ -42,8 +42,6 @@ class _CartProductsState extends State<CartProducts> {
     double subtotal = informationCart.price * informationCart.quantity;
     // Provider del carrito de compras
     final cartProvider = Provider.of<CartProvider>(context);
-    // Metodos globales de los helpers
-    GlobalMethods globalMethods = GlobalMethods();
 
     return InkWell(
       onTap: () => Navigator.pushNamed(context, ProductDetails.routeName,
@@ -90,12 +88,22 @@ class _CartProductsState extends State<CartProducts> {
                             borderRadius: BorderRadius.circular(32.0),
                             // splashColor: ,
                             onTap: () {
-                              globalMethods.showDialogAlert(
-                                  context,
-                                  'Quitar producto',
-                                  '¿Deseas quitar este producto de tu carrito?',
-                                  () => cartProvider
-                                      .removeItem(widget.productId));
+                              CoolAlert.show(
+                                  context: context,
+                                  title: 'Quitar producto',
+                                  type: CoolAlertType.confirm,
+                                  confirmBtnText: 'Aceptar',
+                                  cancelBtnText: 'Cancelar',
+                                  confirmBtnColor: Colors.red[400],
+                                  onConfirmBtnTap: () {
+                                    cartProvider.removeItem(widget.productId);
+                                    Navigator.pop(context);
+                                  },
+                                  text:
+                                      '¿Deseas quitar este producto de tu carrito?',
+                                  animType: CoolAlertAnimType.slideInUp,
+                                  backgroundColor:
+                                      Theme.of(context).backgroundColor);
                             },
                             child: Container(
                                 height: 50,

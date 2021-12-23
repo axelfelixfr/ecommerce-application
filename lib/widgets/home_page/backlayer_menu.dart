@@ -156,7 +156,7 @@ class _BackLayerMenuState extends State<BackLayerMenu> {
   }
 
   List _contentIcons = [
-    MyAppIcons.rss,
+    MyAppIcons.market,
     MyAppIcons.shopping,
     MyAppIcons.wishlist,
     MyAppIcons.uploadProduct

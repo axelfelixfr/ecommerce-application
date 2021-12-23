@@ -1,4 +1,4 @@
-import 'package:ecommerce_application/helpers/global_methods.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:ecommerce_application/providers/wishlist_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:ecommerce_application/widgets/wishlist_page/wishlist_empty.dart';
@@ -12,22 +12,31 @@ class WishlistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
-    GlobalMethods globalMethods = GlobalMethods();
 
     return wishlistProvider.getWishlistItems.isEmpty
         ? Scaffold(body: WishlistEmpty())
         : Scaffold(
             appBar: AppBar(
                 title: Text(
-                    'Mi lista (${wishlistProvider.getWishlistItems.length})'),
+                    'Mi lista (${wishlistProvider.getWishlistItems.length})',
+                    style: TextStyle(color: Theme.of(context).hintColor)),
                 actions: [
                   IconButton(
                       onPressed: () {
-                        globalMethods.showDialogAlert(
-                            context,
-                            'Limpiar lista',
-                            '¿Deseas limpiar tu lista de favoritos?',
-                            () => wishlistProvider.clearWishlist());
+                        CoolAlert.show(
+                            context: context,
+                            title: 'Limpiar lista',
+                            type: CoolAlertType.confirm,
+                            confirmBtnText: 'Aceptar',
+                            cancelBtnText: 'Cancelar',
+                            confirmBtnColor: Colors.red[400],
+                            onConfirmBtnTap: () {
+                              wishlistProvider.clearWishlist();
+                              Navigator.pop(context);
+                            },
+                            text: '¿Deseas limpiar tu lista de favoritos?',
+                            animType: CoolAlertAnimType.slideInUp,
+                            backgroundColor: Theme.of(context).backgroundColor);
                       },
                       icon: Icon(MyAppIcons.trash))
                 ]),

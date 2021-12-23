@@ -26,7 +26,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation>
 
   final iconList = <IconData>[
     MyAppIcons.home,
-    MyAppIcons.rss,
+    MyAppIcons.market,
     MyAppIcons.shopping,
     MyAppIcons.user,
   ];

@@ -2,6 +2,7 @@ import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
 class CartCheckout extends StatelessWidget {
@@ -18,6 +19,30 @@ class CartCheckout extends StatelessWidget {
           child: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.orange.shade400),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7),
+                                    side: BorderSide(
+                                        color: MyAppColors.backgroundColor)))),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Comprar',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 16)),
+                            SizedBox(width: 5),
+                            Icon(LineIcons.creditCard),
+                          ],
+                        ))),
+                /*
                 Expanded(
                     flex: 2,
                     child: Container(
@@ -47,7 +72,7 @@ class CartCheckout extends StatelessWidget {
                                         fontSize: 17,
                                         fontWeight: FontWeight.w600))),
                           )),
-                    )),
+                    ))*/
                 Spacer(),
                 Text('Total:',
                     style: TextStyle(

@@ -1,4 +1,4 @@
-import 'package:ecommerce_application/helpers/global_methods.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:ecommerce_application/models/wishlist.dart';
 import 'package:ecommerce_application/providers/wishlist_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
@@ -60,9 +60,6 @@ class _WishlistProductsState extends State<WishlistProducts> {
   Widget positionedRemove(String productId) {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
 
-    // Metodos globales de los helpers
-    GlobalMethods globalMethods = GlobalMethods();
-
     return Positioned(
         top: 20,
         right: 15,
@@ -77,11 +74,21 @@ class _WishlistProductsState extends State<WishlistProducts> {
             color: MyAppColors.favColor,
             child: Icon(LineIcons.times, color: Colors.white),
             onPressed: () => {
-              globalMethods.showDialogAlert(
-                  context,
-                  'Quitar producto',
-                  '¿Deseas quitar este producto de tu lista de favoritos?',
-                  () => wishlistProvider.removeItem(productId))
+              CoolAlert.show(
+                  context: context,
+                  title: 'Quitar producto',
+                  type: CoolAlertType.confirm,
+                  confirmBtnText: 'Aceptar',
+                  cancelBtnText: 'Cancelar',
+                  confirmBtnColor: Colors.red[400],
+                  onConfirmBtnTap: () {
+                    wishlistProvider.removeItem(productId);
+                    Navigator.pop(context);
+                  },
+                  text:
+                      '¿Deseas quitar este producto de tu lista de favoritos?',
+                  animType: CoolAlertAnimType.slideInUp,
+                  backgroundColor: Theme.of(context).backgroundColor)
             },
           ),
         ));
