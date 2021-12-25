@@ -6,13 +6,13 @@ class ListRecipes extends StatelessWidget {
   final int index;
 
   final List<String> _listImagesRecipes = [
-    'assets/img/receta_alambre_res.jpg',
-    'assets/img/receta_chile_atun.jpg',
-    'assets/img/receta_milanesa_caballo.jpg',
-    'assets/img/receta_papas_chorizo.jpg',
-    'assets/img/receta_rajas_poblanas.jpg',
-    'assets/img/receta_tinga_pollo.jpg',
-    'assets/img/receta_tostadas_salpicon.jpg'
+    'assets/img/recetas/receta_alambre_res.jpg',
+    'assets/img/recetas/receta_chile_atun.jpg',
+    'assets/img/recetas/receta_milanesa_caballo.jpg',
+    'assets/img/recetas/receta_papas_chorizo.jpg',
+    'assets/img/recetas/receta_rajas_poblanas.jpg',
+    'assets/img/recetas/receta_tinga_pollo.jpg',
+    'assets/img/recetas/receta_tostadas_salpicon.jpg'
   ];
 
   final List<String> _listTitleRecipes = [

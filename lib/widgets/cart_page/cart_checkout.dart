@@ -1,15 +1,57 @@
+import 'package:ecommerce_application/models/cart.dart';
 import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
+import 'package:ecommerce_application/services/payment.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:loading_hud/loading_hud.dart';
 import 'package:provider/provider.dart';
 
-class CartCheckout extends StatelessWidget {
+class CartCheckout extends StatefulWidget {
+  @override
+  _CartCheckoutState createState() => _CartCheckoutState();
+}
+
+class _CartCheckoutState extends State<CartCheckout> {
+  @override
+  void initState() {
+    super.initState();
+    StripeService.init();
+  }
+
+  void _payWithCard(BuildContext context, int amount) async {
+    var progressHud = _buildUnCancelableHud(context);
+    progressHud.show();
+    await Future.delayed(Duration(seconds: 2), () async {
+      progressHud.dismiss();
+      // var response = await StripeService.payWithNewCard(currency: 'MXN', amount: '50000');
+      var responseGiffyDialog = await StripeService.payWithNewCard(context,
+          currency: 'MXN', amount: amount.toString());
+      print('La respuesta es $responseGiffyDialog');
+      showDialog(context: context, builder: (_) => responseGiffyDialog);
+      // return response;
+      // Scaffold.of(context).showSnackBar(SnackBar(
+      //     content: Text(response.message),
+      //     duration:
+      //         Duration(milliseconds: response.success == true ? 1500 : 3000)));
+    });
+  }
+
+  // Progress dialog
+  LoadingHud _buildUnCancelableHud(BuildContext context) {
+    return LoadingHud(
+      context,
+      cancelable: false,
+      canceledOnTouchOutside: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    final subtotal = cartProvider.totalAmount;
 
     return Container(
         decoration: BoxDecoration(
@@ -31,7 +73,11 @@ class CartCheckout extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(7),
                                     side: BorderSide(
                                         color: MyAppColors.backgroundColor)))),
-                        onPressed: () {},
+                        onPressed: () {
+                          double amountInCents = subtotal * 1000;
+                          int integerAmount = (amountInCents / 10).ceil();
+                          _payWithCard(context, integerAmount);
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

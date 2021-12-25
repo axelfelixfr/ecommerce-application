@@ -137,7 +137,7 @@ class _LandingPageState extends State<LandingPage>
           backgroundColor: Theme.of(context).backgroundColor);
       // print('Ocurrio un error: ${error.message}');
     } finally {
-        _isLoading = false;
+      _isLoading = false;
     }
   }
 
@@ -164,7 +164,7 @@ class _LandingPageState extends State<LandingPage>
             Text('Bienvenido a',
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600)),
             SizedBox(height: 10),
-            Image.asset('assets/img/MercadoADistancia.png',
+            Image.asset('assets/img/logo/MercadoADistancia.png',
                 filterQuality: FilterQuality.high),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -271,7 +271,7 @@ class _LandingPageState extends State<LandingPage>
         ),
         SizedBox(height: 10),
         _isLoading
-            ? CircularProgressIndicator()
+            ? CircularProgressIndicator(backgroundColor: Colors.amber)
             : SignInButtonBuilder(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 innerPadding: EdgeInsets.symmetric(horizontal: 5.0),

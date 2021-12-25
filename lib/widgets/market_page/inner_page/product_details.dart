@@ -40,7 +40,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Scaffold(
         body: Stack(children: <Widget>[
       Container(
-          foregroundDecoration: BoxDecoration(color: Colors.black12),
+          foregroundDecoration: BoxDecoration(color: Colors.transparent),
           height: MediaQuery.of(context).size.height * 0.47,
           width: double.infinity,
           child:
@@ -186,7 +186,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           width: double.infinity,
                           height: 340,
                           child: ListView.builder(
-                              itemCount: listProducts.length,
+                              itemCount: listProducts.length < 7
+                                  ? listProducts.length
+                                  : 7,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (BuildContext context, int index) {
                                 return ChangeNotifierProvider.value(

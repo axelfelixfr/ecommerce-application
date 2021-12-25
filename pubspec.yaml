@@ -83,6 +83,16 @@ dependencies:
   lovelydialogs: ^0.1.0
   # Validar email
   email_validator: ^1.0.6
+  # Toast
+  flutter_flexible_toast: ^0.1.4
+  # Pagos por stripe
+  stripe_payment: ^1.0.11
+  # Realizar peticiones http
+  http: ^0.12.2
+  # Dialog progress
+  loading_hud: ^0.2.0
+  # Variables de entorno
+  flutter_dotenv: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -100,8 +110,14 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/img/
-    - assets/img/Logo.svg
+    - assets/img/carousel/
+    - assets/img/logo/
+    - assets/img/other_categories/
+    - assets/img/pages/
+    - assets/img/recetas/
+    - assets/img/swiper/
+    - assets/gif/
+    - .env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

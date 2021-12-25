@@ -8,11 +8,11 @@ class CarouselPromos extends StatefulWidget {
 
 class _CarouselPromosState extends State<CarouselPromos> {
   List _carouselImages = [
-    'assets/img/carousel_1.png',
-    'assets/img/carousel_2.png',
-    'assets/img/carousel_3.png',
-    'assets/img/carousel_4.png',
-    'assets/img/carousel_5.png'
+    'assets/img/carousel/carousel_1.png',
+    'assets/img/carousel/carousel_2.png',
+    'assets/img/carousel/carousel_3.png',
+    'assets/img/carousel/carousel_4.png',
+    'assets/img/carousel/carousel_5.png'
   ];
 
   @override

@@ -19,7 +19,7 @@ class CartEmpty extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage('assets/img/shoppingbag.png'))),
+                image: AssetImage('assets/img/pages/shoppingbag.png'))),
       ),
       Padding(
           padding: const EdgeInsets.all(3.0),

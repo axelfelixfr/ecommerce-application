@@ -279,6 +279,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
+  flutter_flexible_toast:
+    dependency: "direct main"
+    description:
+      name: flutter_flexible_toast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.4"
   flutter_page_indicator:
     dependency: transitive
     description:
@@ -367,7 +381,7 @@ packages:
     source: hosted
     version: "0.9.2"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -429,6 +443,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.2"
+  loading_hud:
+    dependency: "direct main"
+    description:
+      name: loading_hud
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   logging:
     dependency: transitive
     description:
@@ -672,6 +693,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0-nullsafety.1"
+  stripe_payment:
+    dependency: "direct main"
+    description:
+      name: stripe_payment
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.11"
   synchronized:
     dependency: transitive
     description:

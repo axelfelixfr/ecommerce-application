@@ -212,7 +212,7 @@ class _UserPageState extends State<UserPage> {
                           showDialog(
                               context: context,
                               builder: (_) => AssetGiffyDialog(
-                                    image: Image.asset('assets/img/homero.gif',
+                                    image: Image.asset('assets/gif/homero.gif',
                                         fit: BoxFit.fill),
                                     buttonOkColor: Colors.amber,
                                     buttonOkText: Text('Sí',
@@ -228,7 +228,6 @@ class _UserPageState extends State<UserPage> {
                                     description: Text(
                                       '¿Estás seguro de querer continuar con salir de la aplicación?',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(),
                                     ),
                                     entryAnimation: EntryAnimation.TOP,
                                     onOkButtonPressed: () async {
@@ -342,7 +341,7 @@ class _UserPageState extends State<UserPage> {
                           showDialog(
                               context: context,
                               builder: (_) => AssetGiffyDialog(
-                                    image: Image.asset('assets/img/homero.gif',
+                                    image: Image.asset('assets/gif/homero.gif',
                                         fit: BoxFit.fill),
                                     buttonOkColor: Colors.amber,
                                     buttonOkText: Text('Sí',

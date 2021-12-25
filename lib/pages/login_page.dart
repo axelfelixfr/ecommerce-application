@@ -4,12 +4,12 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_flexible_toast/flutter_flexible_toast.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:lovelydialogs/lovely_dialogs.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
-import 'package:line_icons/line_icons.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/LoginPage';
@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             Container(
-                margin: EdgeInsets.only(top: 80),
+                margin: EdgeInsets.only(top: 60),
                 height: 90.0,
                 // width: 120.0,
                 // decoration: BoxDecoration(
@@ -110,8 +110,9 @@ class _LoginPageState extends State<LoginPage> {
                 //         image: AssetImage('assets/img/MercadoADistancia.png'),
                 //         fit: BoxFit.fill),
                 //     shape: BoxShape.rectangle)
-                child: Image.asset('assets/img/MercadoADistanciaYellow.png')),
-            SizedBox(height: 30),
+                child:
+                    Image.asset('assets/img/logo/MercadoADistanciaYellow.png')),
+            SizedBox(height: 25),
             Form(
                 key: _formKey,
                 child: Column(children: [
@@ -225,9 +226,6 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
                           onPressed: () {
-                            // Navigator.pushNamed(
-                            //     context, ForgetPasswordPage.routeName);
-                            // dialogForgetPassword(context);
                             dialogPassword(context);
                           },
                           child: Text('¿Haz olvidado tu contraseña?',
@@ -242,6 +240,40 @@ class _LoginPageState extends State<LoginPage> {
     ]));
   }
 
+  void sendPasswordResetEmail(String email, BuildContext context) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      // .then((value) {
+      //   return CoolAlert.show(
+      //       context: context,
+      //       title: '¡Te contactaremos!',
+      //       type: CoolAlertType.success,
+      //       confirmBtnColor: Colors.amber,
+      //       text:
+      //           'Se enviará un correo electrónico hacia la dirección: ${email}',
+      //       animType: CoolAlertAnimType.slideInUp,
+      //       backgroundColor: Theme.of(context).backgroundColor);
+      // });
+      CoolAlert.show(
+          context: context,
+          title: '¡Te contactaremos!',
+          type: CoolAlertType.success,
+          confirmBtnColor: Colors.amber,
+          text: 'Se enviará un correo electrónico hacia la dirección: ${email}',
+          animType: CoolAlertAnimType.slideInUp,
+          backgroundColor: Theme.of(context).backgroundColor);
+    } on FirebaseAuthException catch (e) {
+      return CoolAlert.show(
+          context: context,
+          title: '¡Error!',
+          type: CoolAlertType.error,
+          confirmBtnColor: Colors.amber,
+          text: e.message,
+          animType: CoolAlertAnimType.slideInUp,
+          backgroundColor: Theme.of(context).backgroundColor);
+    }
+  }
+
   Future<Widget> dialogPassword(BuildContext context) {
     return LovelyTextInputDialog(
       context: context,
@@ -251,8 +283,8 @@ class _LoginPageState extends State<LoginPage> {
       title: 'Escribe tu correo electrónico',
       hintText: 'Correo electrónico',
       hintIcon: Icon(LineIcons.at, color: Colors.grey),
-      onConfirm: (text) {
-        if (text == null) {
+      onConfirm: (emailUser) {
+        if (emailUser == null) {
           CoolAlert.show(
               context: context,
               title: '¡Hubo un error!',
@@ -262,17 +294,9 @@ class _LoginPageState extends State<LoginPage> {
               animType: CoolAlertAnimType.slideInUp,
               backgroundColor: Theme.of(context).backgroundColor);
         }
-        final bool isValidEmail = EmailValidator.validate(text);
+        final bool isValidEmail = EmailValidator.validate(emailUser);
         if (isValidEmail) {
-          CoolAlert.show(
-              context: context,
-              title: '¡Te contactaremos!',
-              type: CoolAlertType.success,
-              confirmBtnColor: Colors.amber,
-              text:
-                  'Se enviará un correo electrónico hacia la dirección: ${text}',
-              animType: CoolAlertAnimType.slideInUp,
-              backgroundColor: Theme.of(context).backgroundColor);
+          sendPasswordResetEmail(emailUser, context);
         } else {
           CoolAlert.show(
               context: context,

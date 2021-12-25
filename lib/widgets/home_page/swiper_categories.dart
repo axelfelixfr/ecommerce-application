@@ -14,32 +14,32 @@ class _SwiperCategoriesState extends State<SwiperCategories> {
   List<Map<String, Object>> categories = [
     {
       'categoryName': 'Verdura',
-      'categoryImagesPath': 'assets/img/swiper_1.png',
+      'categoryImagesPath': 'assets/img/swiper/swiper_1.png',
     },
     {
       'categoryName': 'Fruta',
-      'categoryImagesPath': 'assets/img/swiper_2.png',
+      'categoryImagesPath': 'assets/img/swiper/swiper_2.png',
     },
     {
       'categoryName': 'Carne',
-      'categoryImagesPath': 'assets/img/swiper_3.png',
+      'categoryImagesPath': 'assets/img/swiper/swiper_3.png',
     },
     {
       'categoryName': 'Pollo',
-      'categoryImagesPath': 'assets/img/swiper_4.png',
+      'categoryImagesPath': 'assets/img/swiper/swiper_4.png',
     },
     {
       'categoryName': 'Pescado',
-      'categoryImagesPath': 'assets/img/swiper_5.png',
+      'categoryImagesPath': 'assets/img/swiper/swiper_5.png',
     }
   ];
 
   List _swiperImages = [
-    'assets/img/swiper_1.png',
-    'assets/img/swiper_2.png',
-    'assets/img/swiper_3.png',
-    'assets/img/swiper_4.png',
-    'assets/img/swiper_5.png'
+    'assets/img/swiper/swiper_1.png',
+    'assets/img/swiper/swiper_2.png',
+    'assets/img/swiper/swiper_3.png',
+    'assets/img/swiper/swiper_4.png',
+    'assets/img/swiper/swiper_5.png'
   ];
 
   @override

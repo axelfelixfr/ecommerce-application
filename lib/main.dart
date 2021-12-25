@@ -17,8 +17,10 @@ import 'providers/products_provider.dart';
 import 'providers/wishlist_provider.dart';
 import 'utilities/my_app_theme.dart';
 import 'widgets/home_page/inner_page/categories_navigation_rail.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
-void main() {
+Future main() async {
+  await DotEnv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   runApp(AppEcommerce());
 }
