@@ -2,7 +2,9 @@ import 'package:ecommerce_application/pages/home/cart_page.dart';
 import 'package:ecommerce_application/pages/auth/login_page.dart';
 import 'package:ecommerce_application/pages/home/market_page.dart';
 import 'package:ecommerce_application/pages/auth/sign_up_page.dart';
+import 'package:ecommerce_application/pages/home/orders_page.dart';
 import 'package:ecommerce_application/pages/home/wishlist_page.dart';
+import 'package:ecommerce_application/providers/orders_provider.dart';
 import 'package:ecommerce_application/widgets/bottom_navigation.dart';
 import 'package:ecommerce_application/providers/app_state/user_state.dart';
 import 'package:ecommerce_application/widgets/home_page/inner_page/other_categories_products.dart';
@@ -70,9 +72,10 @@ class _AppEcommerceState extends State<AppEcommerce> {
                 ChangeNotifierProvider(create: (_) => ProductsProvider()),
                 ChangeNotifierProvider(create: (_) => CartProvider()),
                 ChangeNotifierProvider(create: (_) => WishlistProvider()),
+                ChangeNotifierProvider(create: (_) => OrdersProvider()),
               ],
               child: Consumer<DarkThemeProvider>(
-                  builder: (context, themeData, child) {
+                  builder: (context, themeChangeProvider, child) {
                 return MaterialApp(
                   title: 'Mercado a Distancia',
                   debugShowCheckedModeBanner: false,
@@ -92,7 +95,8 @@ class _AppEcommerceState extends State<AppEcommerce> {
                     SignUpPage.routeName: (context) => SignUpPage(),
                     MyBottomNavigation.routeName: (context) =>
                         MyBottomNavigation(),
-                    UploadProduct.routeName: (context) => UploadProduct()
+                    UploadProduct.routeName: (context) => UploadProduct(),
+                    OrdersPage.routeName: (context) => OrdersPage(),
                   },
                 );
               }));

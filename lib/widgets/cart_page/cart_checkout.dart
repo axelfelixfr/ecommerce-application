@@ -62,15 +62,6 @@ class _CartCheckoutState extends State<CartCheckout> {
     }
   }
 
-  // Progress dialog
-  LoadingHud _buildUnCancelableHud(BuildContext context) {
-    return LoadingHud(
-      context,
-      cancelable: false,
-      canceledOnTouchOutside: false,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
@@ -163,5 +154,14 @@ class _CartCheckoutState extends State<CartCheckout> {
                 )
               ]),
         ));
+  }
+
+  // Progress dialog
+  LoadingHud _buildUnCancelableHud(BuildContext context) {
+    return LoadingHud(
+      context,
+      cancelable: false,
+      canceledOnTouchOutside: false,
+    );
   }
 }

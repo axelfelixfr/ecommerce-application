@@ -3,6 +3,7 @@ import 'package:ecommerce_application/models/product.dart';
 import 'package:ecommerce_application/providers/products_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'category_rail.dart';
 
@@ -231,13 +232,27 @@ class ContentSpace extends StatelessWidget {
         child: MediaQuery.removePadding(
           removeTop: true,
           context: context,
-          child: ListView.builder(
-            itemCount: listProductsForCategory.length,
-            itemBuilder: (BuildContext context, int index) =>
-                ChangeNotifierProvider.value(
-                    value: listProductsForCategory[index],
-                    child: CategoryRail()),
-          ),
+          child: listProductsForCategory.isEmpty
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(LineIcons.loudlyCryingFace,
+                        size: 80, color: Colors.amber),
+                    Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Text('No hay productos aún en esta categoría',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20)),
+                    ),
+                  ],
+                )
+              : ListView.builder(
+                  itemCount: listProductsForCategory.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                      ChangeNotifierProvider.value(
+                          value: listProductsForCategory[index],
+                          child: CategoryRail()),
+                ),
         ),
       ),
     );

@@ -320,7 +320,7 @@ class _LandingPageState extends State<LandingPage>
             : SignInButtonBuilder(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 innerPadding: EdgeInsets.symmetric(horizontal: 5.0),
-                text: 'Continuar como invitado',
+                text: 'Entrar de forma anónima',
                 icon: LineIcons.user,
                 onPressed: _loginAnonymously,
                 backgroundColor: Colors.blueGrey[700],

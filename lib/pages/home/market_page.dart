@@ -12,8 +12,18 @@ import 'package:provider/provider.dart';
 import 'cart_page.dart';
 import 'wishlist_page.dart';
 
-class MarketPage extends StatelessWidget {
+class MarketPage extends StatefulWidget {
   static const routeName = '/MarketPage';
+
+  @override
+  _MarketPageState createState() => _MarketPageState();
+}
+
+class _MarketPageState extends State<MarketPage> {
+  Future<void> _getProductsOnRefresh() async {
+    await Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,16 +88,19 @@ class MarketPage extends StatelessWidget {
       mainAxisSpacing: 8.0,
       crossAxisSpacing: 6.0,
     )*/
-            GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: 250 / 420,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                children: List.generate(listProducts.length, (index) {
-                  return ChangeNotifierProvider.value(
-                    value: listProducts[index],
-                    child: MarketProducts(),
-                  );
-                })));
+            RefreshIndicator(
+          onRefresh: _getProductsOnRefresh,
+          child: GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 250 / 420,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              children: List.generate(listProducts.length, (index) {
+                return ChangeNotifierProvider.value(
+                  value: listProducts[index],
+                  child: MarketProducts(),
+                );
+              })),
+        ));
   }
 }

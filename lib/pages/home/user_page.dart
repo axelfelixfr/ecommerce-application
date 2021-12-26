@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_application/pages/home/cart_page.dart';
+import 'package:ecommerce_application/pages/home/orders_page.dart';
 import 'package:ecommerce_application/pages/home/wishlist_page.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
@@ -169,6 +170,17 @@ class _UserPageState extends State<UserPage> {
                             trailing: Icon(LineIcons.angleRight),
                             leading: Icon(MyAppIcons.shopping),
                           ))),
+                  Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          splashColor: Theme.of(context).splashColor,
+                          child: ListTile(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(OrdersPage.routeName),
+                            title: Text('Mis mandados'),
+                            trailing: Icon(LineIcons.angleRight),
+                            leading: Icon(LineIcons.dollyFlatbed),
+                          ))),
                   Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: userTitle('Información del usuario')),
@@ -186,7 +198,7 @@ class _UserPageState extends State<UserPage> {
                   // userListTile('', 'subtitlo bonito', 0, context),
                   Padding(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: userTitle('Configuración de la app')),
+                      child: userTitle('Ajustes')),
                   Divider(thickness: 1, color: Colors.grey),
                   ListTileSwitch(
                     value: themeChange.darkTheme,
@@ -367,7 +379,7 @@ class _UserPageState extends State<UserPage> {
                                     },
                                   ));
                         },
-                        title: Text('Cerrar sesión'),
+                        title: Text('Salir de la aplicación'),
                         leading: Icon(LineIcons.alternateSignOut),
                       ),
                     ),

@@ -24,6 +24,7 @@ class CartProvider with ChangeNotifier {
           (exitingCartItem) => Cart(
               id: exitingCartItem.id,
               name: exitingCartItem.name,
+              productId: exitingCartItem.productId,
               price: exitingCartItem.price,
               quantity: exitingCartItem.quantity + 1,
               imageUrl: exitingCartItem.imageUrl));
@@ -33,6 +34,7 @@ class CartProvider with ChangeNotifier {
           () => Cart(
               id: DateTime.now().toString(),
               name: name,
+              productId: productId,
               price: price,
               quantity: 1,
               imageUrl: imageUrl));
@@ -47,6 +49,7 @@ class CartProvider with ChangeNotifier {
           (exitingCartItem) => Cart(
               id: exitingCartItem.id,
               name: exitingCartItem.name,
+              productId: exitingCartItem.productId,
               price: exitingCartItem.price,
               quantity: exitingCartItem.quantity - 1,
               imageUrl: exitingCartItem.imageUrl));
