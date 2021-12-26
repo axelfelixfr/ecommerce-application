@@ -50,10 +50,7 @@ class _SearchPageState extends State<SearchPage> {
               text: TextSpan(children: [
             TextSpan(
                 text: 'Buscar',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: MyAppColors.title,
-                    fontSize: 24))
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24))
           ])),
           stackChild: Container(
               decoration: BoxDecoration(

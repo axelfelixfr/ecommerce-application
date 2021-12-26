@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_application/pages/cart_page.dart';
-import 'package:ecommerce_application/pages/market_page.dart';
-import 'package:ecommerce_application/pages/wishlist_page.dart';
+import 'package:ecommerce_application/pages/home/cart_page.dart';
+import 'package:ecommerce_application/pages/home/market_page.dart';
+import 'package:ecommerce_application/pages/home/wishlist_page.dart';
 import 'package:ecommerce_application/widgets/home_page/inner_page/upload_product.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';

@@ -1,10 +1,11 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:ecommerce_application/pages/cart_page.dart';
-import 'package:ecommerce_application/pages/market_page.dart';
-import 'package:ecommerce_application/pages/home_page.dart';
-import 'package:ecommerce_application/pages/search_page.dart';
-import 'package:ecommerce_application/pages/user_page.dart';
+import 'package:ecommerce_application/pages/home/cart_page.dart';
+import 'package:ecommerce_application/pages/home/market_page.dart';
+import 'package:ecommerce_application/pages/home/home_page.dart';
+import 'package:ecommerce_application/pages/home/search_page.dart';
+import 'package:ecommerce_application/pages/home/user_page.dart';
+import 'package:ecommerce_application/helpers/hex_color.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -208,17 +209,5 @@ class _MyBottomNavigationState extends State<MyBottomNavigation>
                     })))
     */
     );
-  }
-}
-
-class HexColor extends Color {
-  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
-
-  static int _getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll('#', '');
-    if (hexColor.length == 6) {
-      hexColor = 'FF' + hexColor;
-    }
-    return int.parse(hexColor, radix: 16);
   }
 }

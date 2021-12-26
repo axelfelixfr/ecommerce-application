@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_application/pages/cart_page.dart';
-import 'package:ecommerce_application/pages/wishlist_page.dart';
+import 'package:ecommerce_application/pages/home/cart_page.dart';
+import 'package:ecommerce_application/pages/home/wishlist_page.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/utilities/my_app_icons.dart';
@@ -129,8 +129,7 @@ class _UserPageState extends State<UserPage> {
                   ),
                 ),
                 background: Image(
-                  image: NetworkImage(_userImageUrl ??
-                      'https://s2.qwant.com/thumbr/0x380/e/2/1dcae51df64ecca2a6a8eafd5fd420fcc23d09d4473b89678965fafa2bbfe1/user-icon-vector.jpg?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F000%2F551%2F599%2Foriginal%2Fuser-icon-vector.jpg&q=0&b=1&p=0&a=0'),
+                  image: AssetImage('assets/img/pages/market-922845_1920.jpg'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -144,8 +143,9 @@ class _UserPageState extends State<UserPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: userTitle('Información del usuario')),
+                      padding: EdgeInsets.only(top: 5.0),
+                      child: userTitle(
+                          'Hola, bienvenido a nuestro Mercado a Distancia')),
                   Divider(thickness: 1, color: Colors.grey),
                   Material(
                       color: Colors.transparent,
@@ -315,7 +315,8 @@ class _UserPageState extends State<UserPage> {
                 children: [
                   Padding(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: userTitle('Configuración de la app')),
+                      child: userTitle(
+                          'Hola, bienvenido a nuestro Mercado a Distancia')),
                   Divider(thickness: 1, color: Colors.grey),
                   ListTileSwitch(
                     value: themeChange.darkTheme,

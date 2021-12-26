@@ -1,4 +1,4 @@
-import 'package:ecommerce_application/pages/landing_page.dart';
+import 'package:ecommerce_application/pages/auth/landing_page.dart';
 import 'package:ecommerce_application/widgets/bottom_navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

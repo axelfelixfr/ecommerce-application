@@ -35,8 +35,9 @@ class StripeService {
   static AssetGiffyDialog showDialogResponse(
       BuildContext context, String title, dynamic message, bool success) {
     return AssetGiffyDialog(
-      image:
-          Image.asset(success ? 'assets/gif/thanks.gif' : 'assets/gif/sad.gif'),
+      image: Image.asset(
+          success ? 'assets/gif/thanks.gif' : 'assets/gif/sad.gif',
+          fit: BoxFit.fill),
       buttonOkColor: Colors.amber,
       buttonOkText: Text('Continuar', style: TextStyle(color: Colors.white)),
       title: Text(
@@ -103,8 +104,8 @@ class StripeService {
     } catch (error) {
       // return StripeTransactionResponse(
       //     message: 'La transacción tuvo algún error : $error', success: false);
-      return showDialogResponse(context, '¡Error!',
-          'La transacción tuvo algún error : $error', false);
+      print('El error fue: $error');
+      return showDialogResponse(context, '¡Error!', error, false);
     }
   }
 

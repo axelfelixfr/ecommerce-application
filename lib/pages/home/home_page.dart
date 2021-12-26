@@ -1,7 +1,7 @@
 import 'package:backdrop/app_bar.dart';
 import 'package:backdrop/backdrop.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_application/pages/market_page.dart';
+import 'package:ecommerce_application/pages/home/market_page.dart';
 import 'package:ecommerce_application/providers/products_provider.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/widgets/home_page/backlayer_menu.dart';
@@ -64,7 +64,9 @@ class _HomePageState extends State<HomePage> {
                     Theme.of(context).scaffoldBackgroundColor,
                 headerHeight: MediaQuery.of(context).size.height * 0.25,
                 appBar: BackdropAppBar(
-                  title: Text("Mercado a Distancia"),
+                  // title: Text("Mercado a Distancia"),
+                  title: Image.asset(
+                      'assets/img/logo/MercadoADistanciaAppBar.png'),
                   leading: BackdropToggleButton(icon: AnimatedIcons.home_menu),
                   flexibleSpace: Container(
                       decoration:

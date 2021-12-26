@@ -1,8 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
-import 'package:ecommerce_application/pages/login_page.dart';
-import 'package:ecommerce_application/pages/sign_up_page.dart';
+import 'package:ecommerce_application/helpers/hex_color.dart';
+import 'package:ecommerce_application/pages/auth/login_page.dart';
+import 'package:ecommerce_application/pages/auth/sign_up_page.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:ecommerce_application/widgets/bottom_navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,39 +22,64 @@ class _LandingPageState extends State<LandingPage>
     with TickerProviderStateMixin {
   AnimationController _animationController;
   Animation<double> _animation;
-  List<String> images = [
-    'https://cdn.pixabay.com/photo/2016/11/19/20/55/apples-1841132_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2018/02/12/09/00/the-market-3147758_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2017/10/02/17/24/chops-2809505_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2016/12/05/20/35/chicken-1884873_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2016/11/29/05/07/breads-1867459_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2015/01/16/15/02/market-601580_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2018/02/23/18/32/market-3176255_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2018/09/30/20/46/stand-3714597_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2021/02/21/07/42/food-6035549_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2017/09/16/21/44/food-2756948_960_720.jpg',
-    // 'https://cdn.pixabay.com/photo/2016/01/21/23/43/market-1154999_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2016/03/27/21/59/bread-1284438_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2014/02/03/11/43/fruits-257343_960_720.jpg',
-    // 'https://cdn.pixabay.com/photo/2015/09/27/06/18/market-960361_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2017/09/09/16/38/vegetables-2732589_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2017/01/28/17/19/viet-nam-2015934_960_720.jpg',
-    // 'https://cdn.pixabay.com/photo/2017/10/01/20/17/music-2806852_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2021/02/07/20/35/vegetables-5992673_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2018/02/04/19/42/ham-3130701_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2015/06/25/22/06/the-market-place-821843_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2015/04/05/13/09/spices-707807_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2015/01/16/15/01/market-601573_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2016/11/29/10/09/bakery-1868925_960_720.jpg',
+  // List<String> images = [
+  //   'https://cdn.pixabay.com/photo/2016/11/19/20/55/apples-1841132_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2018/02/12/09/00/the-market-3147758_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2017/10/02/17/24/chops-2809505_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2016/12/05/20/35/chicken-1884873_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2016/11/29/05/07/breads-1867459_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2015/01/16/15/02/market-601580_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2018/02/23/18/32/market-3176255_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2018/09/30/20/46/stand-3714597_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2021/02/21/07/42/food-6035549_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2017/09/16/21/44/food-2756948_960_720.jpg',
+  //   // 'https://cdn.pixabay.com/photo/2016/01/21/23/43/market-1154999_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2016/03/27/21/59/bread-1284438_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2014/02/03/11/43/fruits-257343_960_720.jpg',
+  //   // 'https://cdn.pixabay.com/photo/2015/09/27/06/18/market-960361_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2017/09/09/16/38/vegetables-2732589_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2017/01/28/17/19/viet-nam-2015934_960_720.jpg',
+  //   // 'https://cdn.pixabay.com/photo/2017/10/01/20/17/music-2806852_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2021/02/07/20/35/vegetables-5992673_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2018/02/04/19/42/ham-3130701_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2015/06/25/22/06/the-market-place-821843_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2015/04/05/13/09/spices-707807_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2015/01/16/15/01/market-601573_960_720.jpg',
+  //   'https://cdn.pixabay.com/photo/2016/11/29/10/09/bakery-1868925_960_720.jpg',
+  // ];
+
+  List<String> imagesAsset = [
+    'assets/img/landing_animation/apples-1841132_1920.jpg',
+    'assets/img/landing_animation/bread-1284438_1920.jpg',
+    'assets/img/landing_animation/chicken-1884873_1920.jpg',
+    'assets/img/landing_animation/farmers-local-market-3604052_1920.jpg',
+    'assets/img/landing_animation/fruit-428057_1920.jpg',
+    'assets/img/landing_animation/fruits-25266_1920.jpg',
+    'assets/img/landing_animation/fruits-257343_1920.jpg',
+    'assets/img/landing_animation/ham-3130701_1920.jpg',
+    'assets/img/landing_animation/market-1154999_1920.jpg',
+    'assets/img/landing_animation/market-3351156_1920.jpg',
+    'assets/img/landing_animation/market-3860952_1920.jpg',
+    'assets/img/landing_animation/meal-3175540_1920.jpg',
+    'assets/img/landing_animation/morocco-3794323_1920.jpg',
+    'assets/img/landing_animation/seafood-165220.jpg',
+    'assets/img/landing_animation/supermarket-2384476_1920.jpg',
+    'assets/img/landing_animation/the-market-3147758_1920.jpg',
+    'assets/img/landing_animation/vegetable-market-50974_1920.jpg',
+    'assets/img/landing_animation/vegetables-3198801_1920.jpg',
+    'assets/img/landing_animation/vegetables-3386212_1920.jpg',
+    'assets/img/landing_animation/vegetables-5992673_1920.jpg',
   ];
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isLoading = false;
+  int numberAsset;
 
   @override
   void initState() {
     super.initState();
-    images.shuffle();
+    imagesAsset.shuffle();
+    numberAsset = generateRandomNumber();
     _animationController =
         AnimationController(duration: Duration(seconds: 20), vsync: this);
     _animation =
@@ -73,6 +100,14 @@ class _LandingPageState extends State<LandingPage>
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  int generateRandomNumber() {
+    var random = new Random();
+
+    var randomNumber = random.nextInt(imagesAsset.length);
+    print('El número random es: $randomNumber');
+    return randomNumber;
   }
 
   Future<void> _googleSignIn() async {
@@ -145,16 +180,22 @@ class _LandingPageState extends State<LandingPage>
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
-      CachedNetworkImage(
-        imageUrl: images[1],
-        // placeholder: (context, url) =>
-        //     Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) => Icon(LineIcons.exclamationCircle),
-        fit: BoxFit.cover,
-        height: double.infinity,
-        width: double.infinity,
-        alignment: FractionalOffset(_animation.value, 0),
-      ),
+      Image.asset(imagesAsset[numberAsset],
+          fit: BoxFit.cover,
+          colorBlendMode: BlendMode.luminosity,
+          height: double.infinity,
+          width: double.infinity,
+          alignment: FractionalOffset(_animation.value, 0)),
+      // CachedNetworkImage(
+      //   imageUrl: images[1],
+      //   // placeholder: (context, url) =>
+      //   //     Center(child: CircularProgressIndicator()),
+      //   errorWidget: (context, url, error) => Icon(LineIcons.exclamationCircle),
+      //   fit: BoxFit.cover,
+      //   height: double.infinity,
+      //   width: double.infinity,
+      //   alignment: FractionalOffset(_animation.value, 0),
+      // ),
       Container(
           margin: EdgeInsets.only(top: 30),
           width: double.infinity,
@@ -162,7 +203,10 @@ class _LandingPageState extends State<LandingPage>
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             SizedBox(height: 30),
             Text('Bienvenido a',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600)),
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w600,
+                    color: HexColor('#FFC107'))),
             SizedBox(height: 10),
             Image.asset('assets/img/logo/MercadoADistancia.png',
                 filterQuality: FilterQuality.high),
@@ -230,17 +274,18 @@ class _LandingPageState extends State<LandingPage>
               child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Divider(
-              color: Colors.amberAccent,
+              color: Colors.black87,
               thickness: 3,
             ),
           )),
           Text('También puedes iniciar sesión con:',
-              style: TextStyle(fontWeight: FontWeight.w800)),
+              style:
+                  TextStyle(fontWeight: FontWeight.w800, color: Colors.white)),
           Expanded(
               child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Divider(
-              color: Colors.amberAccent,
+              color: Colors.black87,
               thickness: 3,
             ),
           )),

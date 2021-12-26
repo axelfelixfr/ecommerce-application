@@ -1,9 +1,9 @@
-import 'package:ecommerce_application/models/cart.dart';
 import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/services/payment.dart';
 import 'package:ecommerce_application/utilities/my_app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:loading_hud/loading_hud.dart';
 import 'package:provider/provider.dart';
@@ -21,21 +21,45 @@ class _CartCheckoutState extends State<CartCheckout> {
   }
 
   void _payWithCard(BuildContext context, int amount) async {
-    var progressHud = _buildUnCancelableHud(context);
-    progressHud.show();
-    await Future.delayed(Duration(seconds: 2), () async {
-      progressHud.dismiss();
-      // var response = await StripeService.payWithNewCard(currency: 'MXN', amount: '50000');
-      var responseGiffyDialog = await StripeService.payWithNewCard(context,
-          currency: 'MXN', amount: amount.toString());
-      print('La respuesta es $responseGiffyDialog');
-      showDialog(context: context, builder: (_) => responseGiffyDialog);
-      // return response;
-      // Scaffold.of(context).showSnackBar(SnackBar(
-      //     content: Text(response.message),
-      //     duration:
-      //         Duration(milliseconds: response.success == true ? 1500 : 3000)));
-    });
+    print('El total es $amount');
+    if (amount < 1000) {
+      return showDialog(
+          context: context,
+          builder: (_) => AssetGiffyDialog(
+                image: Image.asset('assets/gif/wait.gif', fit: BoxFit.fill),
+                buttonOkColor: Colors.amber,
+                buttonOkText: Text('Ok', style: TextStyle(color: Colors.white)),
+                title: Text(
+                  '¡Un momento!',
+                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600),
+                ),
+                description: Text(
+                  'La compra mínima debe ser de 10 pesos MXN, por favor compra más en el mercado, ¡Te esperamos!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(),
+                ),
+                entryAnimation: EntryAnimation.TOP,
+                onlyOkButton: true,
+                onOkButtonPressed: () {
+                  Navigator.canPop(context) ? Navigator.pop(context) : null;
+                },
+              ));
+    } else {
+      var progressHud = _buildUnCancelableHud(context);
+      progressHud.show();
+      await Future.delayed(Duration(seconds: 2), () async {
+        progressHud.dismiss();
+        // var response = await StripeService.payWithNewCard(currency: 'MXN', amount: '50000');
+        var responseGiffyDialog = await StripeService.payWithNewCard(context,
+            currency: 'MXN', amount: amount.toString());
+        print('La respuesta es $responseGiffyDialog');
+        showDialog(context: context, builder: (_) => responseGiffyDialog);
+        // Scaffold.of(context).showSnackBar(SnackBar(
+        //     content: Text(response.message),
+        //     duration:
+        //         Duration(milliseconds: response.success == true ? 1500 : 3000)));
+      });
+    }
   }
 
   // Progress dialog

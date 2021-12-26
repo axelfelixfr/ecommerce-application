@@ -51,8 +51,6 @@ dependencies:
   auto_size_text: ^2.1.0
   # Animación
   circular_reveal_animation: ^1.1.5
-  # Traer imagenes por internet
-  cached_network_image: ^2.5.1
   # Google Fonts
   google_fonts: ^1.1.2
   # Efecto wave
@@ -83,8 +81,6 @@ dependencies:
   lovelydialogs: ^0.1.0
   # Validar email
   email_validator: ^1.0.6
-  # Toast
-  flutter_flexible_toast: ^0.1.4
   # Pagos por stripe
   stripe_payment: ^1.0.11
   # Realizar peticiones http
@@ -116,6 +112,7 @@ flutter:
     - assets/img/pages/
     - assets/img/recetas/
     - assets/img/swiper/
+    - assets/img/landing_animation/
     - assets/gif/
     - .env
   #   - images/a_dot_ham.jpeg

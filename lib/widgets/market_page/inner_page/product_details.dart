@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
-import 'package:ecommerce_application/pages/cart_page.dart';
-import 'package:ecommerce_application/pages/wishlist_page.dart';
+import 'package:ecommerce_application/pages/home/cart_page.dart';
+import 'package:ecommerce_application/pages/home/wishlist_page.dart';
 import 'package:ecommerce_application/providers/cart_provider.dart';
 import 'package:ecommerce_application/providers/dark_theme_provider.dart';
 import 'package:ecommerce_application/providers/products_provider.dart';

@@ -1,10 +1,10 @@
-import 'package:ecommerce_application/pages/cart_page.dart';
-import 'package:ecommerce_application/pages/login_page.dart';
-import 'package:ecommerce_application/pages/market_page.dart';
-import 'package:ecommerce_application/pages/sign_up_page.dart';
-import 'package:ecommerce_application/pages/wishlist_page.dart';
+import 'package:ecommerce_application/pages/home/cart_page.dart';
+import 'package:ecommerce_application/pages/auth/login_page.dart';
+import 'package:ecommerce_application/pages/home/market_page.dart';
+import 'package:ecommerce_application/pages/auth/sign_up_page.dart';
+import 'package:ecommerce_application/pages/home/wishlist_page.dart';
 import 'package:ecommerce_application/widgets/bottom_navigation.dart';
-import 'package:ecommerce_application/providers/state_app/user_state.dart';
+import 'package:ecommerce_application/providers/app_state/user_state.dart';
 import 'package:ecommerce_application/widgets/home_page/inner_page/other_categories_products.dart';
 import 'package:ecommerce_application/widgets/home_page/inner_page/upload_product.dart';
 import 'package:ecommerce_application/widgets/market_page/inner_page/product_details.dart';
